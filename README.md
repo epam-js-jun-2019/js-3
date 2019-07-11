@@ -1,1 +1,2 @@
-# js-3
+# Homework #3 TODO list
+## Deadline: 07/08
