@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>To-Do App</title>
+  </head>
+  <body>
+    <main>
+      <section class="application">
+        <div class="application__title"><span>To-Do List</span></div>
+        <form class="form-group">
+          <div class="input-container">
+            <label class="input-label" for="input-text">
+              <span>Type a task</span>
+              <input
+                type="text"
+                class="input-text"
+                id="input-text"
+                placeholder="What to do?"
+              />
+              <select name="Deadline" id="deadline">
+                <option value="none">none</option>
+                <option value="tomorrow">tomorrow</option>
+                <option value="next_week">next week</option>
+              </select>
+              <button class="submit-btn">Add</button>
+            </label>
+          </div>
+          <div class="search-container">
+            <label for="search" class="search-label">
+              <span>Search</span>
+              <input
+                type="text"
+                class="search"
+                id="search"
+                placeholder="Filter tasks"
+              />
+            </label>
+          </div>
+        </form>
+        <ul class="collection">
+          <li class="collection__item" id="item-0">
+            <span>Lorem ipsum dolor</span>
+            <div class="icons">
+              <i class="far fa-circle"></i>
+              <i class="fas fa-backspace"></i>
+            </div>
+          </li>
+          <li class="collection__item" id="item-0">
+            <span>Lorem ipsum dolor</span>
+            <div class="icons">
+              <i class="far fa-check-circle"></i>
+              <i class="fas fa-backspace"></i>
+            </div>
+          </li>
+          <li class="collection__item" id="item-0">
+            <span>Lorem ipsum dolor</span>
+            <div class="icons">
+              <i class="far fa-circle"></i>
+              <i class="fas fa-backspace"></i>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <script src="https://kit.fontawesome.com/a863ebaea0.js"></script>
+  </body>
+</html>
