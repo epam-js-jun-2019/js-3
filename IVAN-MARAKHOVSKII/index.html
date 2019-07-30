@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="./style/style.css" />
+  
 </head>
 
 <body>
@@ -16,19 +17,19 @@
     <div class="todo">
       <div class="head">
         <div class="inputData"></div>
-        <input type="text" class="form-control mr-2 add" placeholder="Добавить новое задание!" id="input">
-        <input type="text" class="form-control mr-2 add" placeholder="Дедлайн YYYY-MM-DD" id="deadline">
+        <input type="text" class="form-control mr-2 add" placeholder="Добавить задание!" id="input">
+        <input type="text" class="form-control mr-2 add" placeholder="Дедлайн YYYY-MM-DD" id="deadline" >
         
         <button type="button" class="btn btn-info" onclick="addItem()" id="inputBtn">Добавить</button>
       </div>
       <div class="filters">
-        <button type="button" class="btn btn-info" id="tomorrowBtn" onclick="render('tmr')">Завтра</button>
-        <button type="button" class="btn btn-info" id="weekBtn" onclick="render('week')">Неделя</button>
+        <button type="button" class="btn btn-info mt-1 mt-lg-0" id="tomorrowBtn" onclick="render('tmr')">Завтра</button>
+        <button type="button" class="btn btn-info mt-1 mt-lg-0" id="weekBtn" onclick="render('week')">Неделя</button>
 
-        <button type="button" class="btn btn-info" id="doneBtn" onclick="render('done')">Выполнены</button>
+        <button type="button" class="btn btn-info mt-1 mt-lg-0" id="doneBtn" onclick="render('done')">Выполнены</button>
 
-        <button type="button" class="btn btn-info" id="undoneBtn" onclick="render('undone')">Не выполнены</button>
-        <button type="button" class="btn btn-info" id="undoneBtn" onclick="render('all')">Все задания</button>
+        <button type="button" class="btn btn-info mt-1 mt-lg-0" id="undoneBtn" onclick="render('undone')">Не выполнены</button>
+        <button type="button" class="btn btn-info mt-1 mt-lg-0" id="undoneBtn" onclick="render('all')">Все задания</button>
      
       </div>
       <div class="itemList" id="itemList">
@@ -36,8 +37,8 @@
       </div>
     </div>
   </div>
-
-  <script src="main.js"></script>
+  
+  <script src='./scripts/main.js'></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>

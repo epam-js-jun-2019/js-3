@@ -20,10 +20,10 @@
       padding: 1rem;
     }
 
-    &.itemList {
+    & .itemList {
       display: flex;
       flex-direction: column;
-      padding: 1rem 2rem 2rem 2rem;
+      padding: 1rem 1rem 1rem 1rem;
     }
   }
 }
@@ -38,7 +38,7 @@
   font-size: 1.5rem;
 
   &:hover {
-    background: #ddd;
+    background: rgb(177, 160, 160);
   }
   p {
     margin: 0;
@@ -47,9 +47,8 @@
 }
 
 .checked {
-  background: #888;
+  background: rgb(78, 73, 73);
   color: #fff;
-  text-decoration: line-through;
 }
 
 .close {

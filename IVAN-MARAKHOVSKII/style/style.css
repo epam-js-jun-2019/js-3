@@ -31,7 +31,7 @@
   padding: 1rem;
 }
 
-.grid .todo.itemList {
+.grid .todo .itemList {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -39,7 +39,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 1rem 2rem 2rem 2rem;
+  padding: 1rem 1rem 1rem 1rem;
 }
 
 .item {
@@ -54,7 +54,7 @@
 }
 
 .item:hover {
-  background: #ddd;
+  background: #b1a0a0;
 }
 
 .item p {
@@ -62,9 +62,8 @@
 }
 
 .checked {
-  background: #888;
+  background: #4e4949;
   color: #fff;
-  text-decoration: line-through;
 }
 
 .close {
