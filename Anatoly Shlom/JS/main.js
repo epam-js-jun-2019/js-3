@@ -9,6 +9,8 @@ function addTask() {
     }
     tasklist.push({ task: task, deadline: deadline, done:'0' });
     renderTasks();
+    document.getElementById("task").value = "";
+    document.getElementById("deadline").value = "1";
     return tasklist;
 }
 
@@ -29,6 +31,6 @@ function renderTasks() {
         var td2 = document.createElement("td");
         tr.appendChild(td2);
         var deadl = document.createTextNode(dlitem);
-        td2.appendChild(deadl);        
+        td2.appendChild(deadl);   
     }
 }
