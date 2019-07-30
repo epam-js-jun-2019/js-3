@@ -8,9 +8,55 @@
         ToDo List
     </title>
     <link rel="stylesheet" type="text/css" media="screen" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/skeleton.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
 </head>
 <body>
-    
+    <main>
+        <div class="container">
+                <div class="row">
+                    <h1>My ToDo:</h1>
+                    <a class="button" href="#addnewtask" onclick="renderTasks()">Add Task</a>
+                    <table class="u-full-width">
+                        <thead>
+                            <tr class="head">
+                                <th>Task</th>
+                                <th>Deadline</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="start">
+                            <tr class="tasklist" id="start">
+                                <td colspan="4">
+                                    <span class="list__message_empty">You have no tasks</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <form>
+                <a id="addnewtask"></a>
+                <h3>Add new Task to list</h3>
+                <div class="row">
+                    <div class="nine columns">
+                        <label for="task">Your task</label>
+                        <textarea class="u-full-width" placeholder="Don't forget to do..." id="task"></textarea>           
+                    </div>
+                    <div class="three columns">
+                        <label for="deadline">Set Deadline</label>
+                        <select class="u-full-width" id="deadline">
+                            <option value="1">N/A</option>
+                            <option value="2">One Day</option>
+                            <option value="3">One week</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <input class="button-primary" type="submit" value="Submit" onclick="addTask()">                    </div>
+                </form>
+        </div>
+    </main>
+<script src="JS/main.js"></script>
 </body>
 </html>
