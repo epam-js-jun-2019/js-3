@@ -1,0 +1,38 @@
+html,
+body {
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-app {
+  display: flex;
+  flex-direction: column;
+  border: black 1px solid;
+}
+
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.todo__chunk {
+  /*border: yellowgreen 1px solid;*/
+  margin: 0px 5px;
+}
+
+/* --------------------todo chunks--------------------*/
+.todo__text {
+}
+
+.progress-switch {
+}
