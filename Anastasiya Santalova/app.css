@@ -1,0 +1,155 @@
+html {
+  width: 100%;
+  height: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: #A95B62;
+  color: #F5EAEA; }
+
+p {
+  margin: 0; }
+
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas: "h h h" ". tt ." ". app ." ". . ." "f f f";
+  grid-template-columns: 1fr 700px 1fr;
+  grid-template-rows: 50px 2fr 400px 1fr 40px; }
+
+.header {
+  grid-area: h;
+  vertical-align: middle; }
+
+.footer {
+  grid-area: f;
+  position: relative;
+  text-align: left;
+  font-size: 0.8em; }
+  .footer p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+
+.todo-title {
+  grid-area: tt;
+  position: relative;
+  margin: 0;
+  font-size: 30pt; }
+  .todo-title h1 {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+
+.todo-area {
+  grid-area: app;
+  display: grid;
+  grid-template-areas: "input" "filt" "tsks";
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 40px 1fr;
+  background-color: #F5EAEA;
+  color: #A95B62;
+  border: 20px solid #F5EAEA;
+  border-radius: 15px; }
+
+.add-task {
+  grid-area: input;
+  position: relative;
+  border: 2px solid lightgrey; }
+  .add-task__input {
+    height: 30px;
+    border-radius: 5px; }
+    .add-task__input_task {
+      width: 45%;
+      padding: 0;
+      border: 1px solid lightgrey;
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+    .add-task__input_date {
+      width: 20%;
+      padding: 0;
+      border: 1px solid lightgrey;
+      position: absolute;
+      top: 50%;
+      left: 65%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+  .add-task__button {
+    height: 30px;
+    width: 15%;
+    margin-left: 10px;
+    border-radius: 5px;
+    background-color: #F5EAEA;
+    color: #A95B62;
+    font-weight: 800;
+    position: absolute;
+    top: 50%;
+    left: 85%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+
+.filter {
+  grid-area: filt;
+  position: relative;
+  display: grid;
+  grid-template-areas: "filt1 filt2";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr; }
+  .filter_checked {
+    grid-area: filt1;
+    margin: auto; }
+  .filter_deadline {
+    grid-area: filt2;
+    margin: auto; }
+  .filter select {
+    margin-left: 15px; }
+
+#tasks {
+  grid-area: tsks;
+  background-color: white;
+  text-align: left;
+  position: relative;
+  overflow: auto; }
+
+.tasks__element {
+  display: grid;
+  grid-template-areas: "check txt dt del";
+  grid-template-columns: 30px 1fr 100px 40px;
+  grid-template-rows: 1fr;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px dashed lightgray; }
+  .tasks__element_checkbox {
+    grid-area: check;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin: auto; }
+  .tasks__element_description {
+    grid-area: txt;
+    position: relative;
+    margin: auto; }
+  .tasks__element_date {
+    grid-area: dt;
+    position: relative;
+    margin: auto; }
+  .tasks__element_delete {
+    grid-area: del;
+    position: relative;
+    margin: auto; }
