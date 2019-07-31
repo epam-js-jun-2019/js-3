@@ -1,37 +1,67 @@
 'use strict'
 
-// function compareDates (date1, date2) {
+function compareDates (date1, date2) {
 
-//   var year1 = date1.getFullYear();
-//   var year2 = date2.getFullYear();
-//   var month1 = date1.getMonth();
-//   var month2 = date2.getMonth();
-//   var day1 = date1.getDate();
-//   var day2 = date2.getDate();
+  var date2Arr = date2.split("-");
+  var year1 = date1.getFullYear();
+  var year2 = +date2Arr[0];
+  var month1 = date1.getMonth()+1;
+  var month2 = +date2Arr[1];
+  var day1 = date1.getDate();
+  var day2 = +date2Arr[2];
+  console.log(day1);
+  console.log(day2);
+  console.log(month1);
+  console.log(month2);
+  console.log(year1);
+  console.log(year2);
 
-//   if (year1 === year2 && month1 === month2 && day1 === day2) {
-//     return "today";
-//   } else if (year1 > year2 || 
-//       (year1 === year2 && month1 > month2) || 
-//       (year1 === year2 && month1 === month2 && day1 > day2)) {
-//     return "failed";
-//   } else if (year1 === year2 && month1 === month2 && (day2 - day1)===1) {
-//     return "tomorrow";
-//   } 
-// }
+  if (year1 === year2 && month1 === month2 && day1 === day2) {
+    console.log("today");
+    return "today";
+  } else if (year1 > year2 || 
+      (year1 === year2 && month1 > month2) || 
+      (year1 === year2 && month1 === month2 && day1 > day2)) {
+        console.log("failed");
+    return "failed";
+  } else if (year1 === year2 && month1 === month2 && (day2 - day1)===1) {
+    console.log("tomorrow");
+    return "tomorrow";
+  } 
+}
 
+function toLocalStorage (list) {
+  localStorage.setItem('myArr', JSON.stringify(list));
+}
+
+function delButtonOnclick () {
+  var delButton = document.getElementsByClassName('tasks__element_delbutton');
+
+  for (var i=0; i<delButton.length; i++) {
+    delButton[i].onclick = function (e) {
+      var but = this.getAttribute('id');
+
+      e.preventDefault();
+      list.delete(but);
+      list.show();
+    }
+  }
+}
 
 var list = (function (){
 
-  var taskList = [{id: 123, check: false, text: "drink cofee", deadline: "2019-07-30"}, 
-                  {id: 321, check: true, text: "call mom", deadline: "2019-07-29"}];
-
-  //localStorage.setItem('myArr', JSON.stringify(taskList));
-
-  console.log(localStorage.getItem('myArr'));
+  var taskList;
+  var localTaskList = JSON.parse(localStorage.getItem('myArr'));
+  
+  if (localTaskList.length == 0) {
+    taskList = [{id: 123, check: false, text: "drink cofee", deadline: "2019-07-30"}, 
+                {id: 321, check: true, text: "call mom", deadline: "2019-07-29"}];
+  } else {
+    taskList = localTaskList;
+  }
 
   return {
-    add: function (text,deadline) {
+    create: function (text,deadline) {
       var newTask = {};
 
       newTask.id = Date.now();
@@ -43,45 +73,42 @@ var list = (function (){
     },
 
     push: function (newTask) {
-      taskList = JSON.parse(localStorage.getItem('myArr'));
+      console.log(taskList);
       taskList.push(newTask);
-      localStorage.setItem('myArr', JSON.stringify(taskList));
-      taskList = JSON.parse(localStorage.getItem('myArr'));
-      console.log(localStorage.getItem('myArr'));
+      console.log(taskList);
+      toLocalStorage(taskList);
+      console.log(localTaskList);
+      //taskList = localTaskList;
+      //console.log(taskList);
     },
 
     delete: function (id) {
-      taskList = JSON.parse(localStorage.getItem('myArr'));
-      
       var ind;
 
       taskList.forEach(function (curr, i) {
-        console.log(i);
-        if (curr.id === id) {
+        if (curr.id == id) {
           ind = i;
         }
       });
 
       taskList.splice(ind, 1);
-      localStorage.setItem('myArr', JSON.stringify(taskList));
-      taskList = JSON.parse(localStorage.getItem('myArr'));
-      console.log(localStorage.getItem('myArr'));
+      toLocalStorage(taskList);
     },
 
     get: function () {
-      taskList = JSON.parse(localStorage.getItem('myArr'));
       return taskList;
     },
 
-    show: function () {
-      taskList = JSON.parse(localStorage.getItem('myArr'));
+    show: function (list = taskList) {
       var parentElem = document.getElementById('tasks');
 
+      // clear task-list
       while (parentElem.firstChild) {
         parentElem.removeChild(parentElem.firstChild);
       }
   
-      return taskList.forEach(function(elem){
+      // show updated task-list
+      return list.forEach(function(elem){
 
         var div = document.createElement('div');
         var checkInput = document.createElement('input');
@@ -116,71 +143,85 @@ var list = (function (){
         div.appendChild(dateSpan);
         div.appendChild(delSpan);
         delSpan.appendChild(delButton);
+
+        delButtonOnclick();
       })
     },
 
-    filter: function (status, deadline) {
+    filterCheck: function (check) {
       var filteredTaskList = [];
 
-      if (status==="all") {
-        filteredTaskList = taskList;
+      if (check==="all") {
+        return list.show();
+      } else if (check==='do') {
+        taskList.forEach(function (curr) {
+          if (curr.check === false) {
+            filteredTaskList.push(curr);
+          }
+        });
       } else {
         taskList.forEach(function (curr) {
-          if (curr.status === status) {
+          if (curr.check) {
             filteredTaskList.push(curr);
           }
         });
       }
+      return list.show(filteredTaskList);
+    },
 
+    filterDeadline: function (deadline) {
+      var filteredTaskList = [];
       var today = new Date();
-
-      var doubleFilteredTaskList = [];
 
       switch(deadline) {
         case 'failed':
-          filteredTaskList.forEach(function (curr) {
-            if (compareDates(today, curr.date)==="failed") {
+          taskList.forEach(function (curr) {
+            console.log(curr);
+            console.log(curr.deadline);
+            if (compareDates(today, curr.deadline)==="failed") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'today':
-          filteredTaskList.forEach(function (curr) {
-            if (compareDates(today, curr.date)==="today") {
+            taskList.forEach(function (curr) {
+            if (compareDates(today, curr.deadline)==="today") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'tomorrow':
-          filteredTaskList.forEach(function (curr) {
-            if (compareDates(today, curr.date)==="tomorrow") {
+            taskList.forEach(function (curr) {
+            if (compareDates(today, curr.deadline)==="tomorrow") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'week':
-          filteredTaskList.forEach(function (curr) {
-            if (compareDates(today, curr.date)==="week") {
+            taskList.forEach(function (curr) {
+            if (compareDates(today, curr.deadline)==="week") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'month':
-          filteredTaskList.forEach(function (curr) {
-            if (compareDates(today, curr.date)==="month") {
+            taskList.forEach(function (curr) {
+            if (compareDates(today, curr.deadline)==="month") {
               filteredTaskList.push(curr);
             }
           });
           break;
         default:
-          doubleFilteredTaskList = filteredTaskList;
+          filteredTaskList = taskList;
       }
 
-      return doubleFilteredTaskList;
+      return list.show(filteredTaskList);
     }
   };
 
 })();
+
+
 
 //var dd = new Date()
 //var todayD = dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate()
@@ -190,45 +231,60 @@ window.onload = function () {
   var addTask = document.getElementById('add-task');
   var addDate = document.getElementById('add-date');
   var addButton = document.getElementById('add-button');
-  var delButton = document.getElementsByClassName('tasks__element_delbutton');
-
-  var delButton1 = document.getElementById('321');
-  console.log(delButton1);
- // console.log(delButton1.id);
+  
+  var checkBox = document.getElementsByClassName('tasks__element_checkbox');
 
   list.show();
 
   addButton.onclick = function (e) {
     e.preventDefault();
     if (addTask.value && addDate.value) {
-      var newTask = list.add(addTask.value, addDate.value);
+      var newTask = list.create(addTask.value, addDate.value);
       
       list.push(newTask);
       list.show();
     }
   };;
 
+  delButtonOnclick();
+  
 
-  delButton.onclick = function () {
-    console.log(delButton.id);
-    list.delete(delButton.id);
-    list.show();
-  }
 
+  // for (var i=0; i<checkBox.length; i++) {
+
+  //   checkBox[i].onclick = function (e) {
+
+  //     var checked = this.getAttribute('checked');
+
+  //     console.log(checked);
+    
+  //     e.preventDefault();
+  //     if (!checked) {
+  //       console.log('ura');
+  //       checked = true;
+  //     } else {
+  //       checked = false;
+  //     }
+  //   }
+  // }
 
   
   var filterChecked = document.getElementById('filter_checked');
   var filterDeadline = document.getElementById('filter_deadline');
+
+  console.log(filterDeadline);
+  console.log(filterDeadline.value);
   
   filterChecked.onchange = function (e) {
     e.preventDefault();
-    list.filter(filterChecked.value);
-    list.show();
+
+    list.filterCheck(filterChecked.value);
   }
 
-  filterDeadline.onchange = function () {
-    list.filter(filterChecked.value, filterDeadline.value);
-    list.show();
+  filterDeadline.onchange = function (e) {
+    e.preventDefault();
+
+    list.filterDeadline(filterDeadline.value);
   }
 
 }
