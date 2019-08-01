@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href='//fonts.googleapis.com/css?family=Raleway:100,300,400,600' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+<div class="main-container">
+    <header class="task-menu">
+        <nav class="navigation">
+          <span>task sort</span>
+          <a class="button sort-done">checked</a>
+          <a class="button sort-undone">pending</a>
+          <span>by deadline</span>
+          <a class="button sort-tomorrow">tomorrow</a>
+          <a class="button sort-week">week</a>
+          <a class="button button-primary add-new">add new task</a>
+        </nav>
+    </header>
+    <section class="todo-list">
+        <section class="tasks-container">
+          <!-- <div class="task" id="idx-%id%">
+            <h6 class="task-title">%TITLE%</h6>
+            <p class="task-description">%DESCRIPTION%</p>
+          </div> -->
+        </section>
+        <section class="add-form">
+          <form class="new-task-form">
+            <h6 class="new-task-header">new task</h6>
+            <input type="text" class="add-title" placeholder="task title">
+            <textarea class="add-description" placeholder="task description"></textarea>
+            <input type="button" class="button-primary save-button" value="save">
+          </form>
+        </section>
+    </section>
+</div>
+</body>
+</html>
