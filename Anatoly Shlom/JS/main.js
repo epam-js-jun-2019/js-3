@@ -44,7 +44,10 @@ function getDLdate(param, creationDate) {
     }
     return DLDate;
 }
-
+//function deleteTask(taskID){
+//    var taskID=
+//
+//}
 
 function renderTasks() {
     var table=document.getElementById("start");
@@ -54,16 +57,35 @@ function renderTasks() {
     for (var i=0; i<tasklist.length; i++) {
         var taskitem = tasklist[i]['task'],
         dlitem = getDLdate(tasklist[i]['deadline'],tasklist[i]['creationDate']);
+        status = tasklist[i]['done'],
+
         var tr = document.createElement("tr");
         table.appendChild(tr);
+
         var td_Task = document.createElement("td");
         tr.appendChild(td_Task);
         var txt = document.createTextNode(taskitem);
         td_Task.appendChild(txt);
+        
         var td_Deadline = document.createElement("td");
         tr.appendChild(td_Deadline);
         var deadl = document.createTextNode(dlitem);
         td_Deadline.appendChild(deadl); 
+
+        var td_Status = document.createElement("td");
+        tr.appendChild(td_Status);
+        var statusitem = document.createTextNode(status);
+        td_Status.appendChild(statusitem); 
+
+        var td_Actions = document.createElement("td");
+        tr.appendChild(td_Actions);
+        var actionitems = document.createElement("span");
+        actionitems.setAttribute("class", "delete");
+        actionitems.setAttribute("id", tasklist[i]);
+        var del = document.createTextNode("❌");
+        actionitems.appendChild(del);
+        td_Actions.appendChild(actionitems); 
+
 
     }
 }
