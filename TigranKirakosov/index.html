@@ -28,26 +28,29 @@
               <select name="Deadline" id="deadline">
                 <option value="none">none</option>
                 <option value="tomorrow">tomorrow</option>
-                <option value="next_week">next week</option>
+                <option value="next week">next week</option>
               </select>
               <button class="submit-btn">Add</button>
             </label>
           </div>
           <div class="search-container">
-            <label for="search" class="search-label">
-              <span>Search</span>
-              <input
-                type="text"
-                class="search"
-                id="search"
-                placeholder="Filter tasks"
-              />
+            <label for="filter" class="filter-label">
+              <span>Filter to-do's</span>
+              <select name="Filter" id="filter">
+                <option value="no filter">no filter</option>
+                <option value="done">done</option>
+                <option value="undone">undone</option>
+              </select>
+              <button class="filter-btn">
+                <i class="fas fa-filter"></i>
+              </button>
             </label>
           </div>
         </form>
         <ul class="collection">
-          <li class="collection__item" id="item-0">
-            <span>Lorem ipsum dolor</span>
+          <!-- <li class="collection__item" id="item-0">
+            <span class="text">Lorem ipsum dolor</span>
+            <span class="deadline">Deadline: tomorrow</span>
             <div class="icons">
               <i class="far fa-circle"></i>
               <i class="fas fa-backspace"></i>
@@ -66,10 +69,11 @@
               <i class="far fa-circle"></i>
               <i class="fas fa-backspace"></i>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
     </main>
+    <script src="index.js"></script>
     <script src="https://kit.fontawesome.com/a863ebaea0.js"></script>
   </body>
 </html>

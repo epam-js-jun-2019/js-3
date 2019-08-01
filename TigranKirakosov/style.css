@@ -89,7 +89,7 @@ body {
 .collection {
   display: flex;
   flex-direction: column;
-  width: 20rem;
+  width: 35rem;
   text-align: center;
 }
 
@@ -119,4 +119,10 @@ body {
   position: absolute;
   right: 0;
   cursor: pointer;
+}
+
+.deadline {
+  position: absolute;
+  right: -15rem;
+  color: var(--color-grey-light-2);
 }
