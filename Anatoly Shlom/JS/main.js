@@ -1,4 +1,5 @@
-var tasklist=[];
+var tasklist=JSON.parse(localStorage.getItem("tasklist")) || [];
+
 
 function addTask() {
     var task = document.getElementById("task").value;
@@ -14,7 +15,7 @@ function addTask() {
     document.getElementById("task").value = "";
     document.getElementById("deadline").value = "1";
     console.log(tasklist);
-    return tasklist;
+    localStorage.setItem("tasklist", JSON.stringify(tasklist));
 }
 
 function addDays(date, days) {
@@ -87,6 +88,8 @@ function renderTasks() {
 
 function deleteTask(taskID){
     tasklist.splice(taskID,1);
+    localStorage.setItem("tasklist", JSON.stringify(tasklist));
     renderTasks();
 }
 
+renderTasks();
