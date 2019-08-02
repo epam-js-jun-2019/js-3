@@ -13,15 +13,13 @@ function addTask() {
     renderTasks();
     document.getElementById("task").value = "";
     document.getElementById("deadline").value = "1";
+    console.log(tasklist);
     return tasklist;
 }
 
 function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
-    console.log(result);
-    console.log(result.toLocaleDateString());
-
     return result;
 
 }
@@ -44,10 +42,7 @@ function getDLdate(param, creationDate) {
     }
     return DLDate;
 }
-//function deleteTask(taskID){
-//    var taskID=
-//
-//}
+
 
 function renderTasks() {
     var table=document.getElementById("start");
@@ -57,7 +52,7 @@ function renderTasks() {
     for (var i=0; i<tasklist.length; i++) {
         var taskitem = tasklist[i]['task'],
         dlitem = getDLdate(tasklist[i]['deadline'],tasklist[i]['creationDate']);
-        status = tasklist[i]['done'],
+        status = tasklist[i]['done'];
 
         var tr = document.createElement("tr");
         table.appendChild(tr);
@@ -79,13 +74,21 @@ function renderTasks() {
 
         var td_Actions = document.createElement("td");
         tr.appendChild(td_Actions);
-        var actionitems = document.createElement("span");
+        var actionitems = document.createElement("a");
+        actionitems.setAttribute("href", "#");
         actionitems.setAttribute("class", "delete");
-        actionitems.setAttribute("id", tasklist[i]);
+        actionitems.setAttribute("id", i);
+        actionitems.setAttribute("onclick",'deleteTask('+i+')');
         var del = document.createTextNode("❌");
         actionitems.appendChild(del);
         td_Actions.appendChild(actionitems); 
 
 
     }
+};
+
+function deleteTask(taskID){
+    tasklist.splice(taskID,1);
+    renderTasks();
 }
+
