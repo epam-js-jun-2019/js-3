@@ -82,8 +82,6 @@ function renderTasks() {
         var del = document.createTextNode("❌");
         actionitems.appendChild(del);
         td_Actions.appendChild(actionitems); 
-
-
     }
 };
 
