@@ -25,24 +25,28 @@
                 id="input-text"
                 placeholder="What to do?"
               />
+              <span>Set deadline</span>
               <select name="Deadline" id="deadline">
-                <option value="none">none</option>
+                <option value="no deadline">no deadline</option>
                 <option value="tomorrow">tomorrow</option>
                 <option value="next week">next week</option>
               </select>
               <button class="submit-btn">Add</button>
             </label>
           </div>
+          <div class="clear-container">
+            <button class="clear-btn">Clear tasks</button>
+          </div>
           <div class="search-container">
             <label for="filter" class="filter-label">
               <span>Filter to-do's</span>
               <select name="Filter" id="filter">
                 <option value="no filter">no filter</option>
-                <option value="undone">undone</option>
-                <option value="done">done</option>
-                <option value="none">none</option>
-                <option value="tomorrow">tomorrow</option>
-                <option value="next week">next week</option>
+                <option value="no deadline">Deadline: no deadline</option>
+                <option value="tomorrow">Deadline: tomorrow</option>
+                <option value="next week">Deadline: next week</option>
+                <option value="undone">Is done: undone</option>
+                <option value="done">Is done: done</option>
               </select>
               <button class="filter-btn">
                 <i class="fas fa-filter"></i>
