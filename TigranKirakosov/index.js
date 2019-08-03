@@ -5,9 +5,11 @@ var taskController = (function() {
     this.id = id;
     this.text = text;
     this.deadline = deadline;
-    this.isDone = false;
+    this.isDone = 'undone';
     this.toggleState = function() {
-      this.isDone = !this.isDone;
+      this.isDone === 'undone'
+        ? (this.isDone = 'done')
+        : (this.isDone = 'undone');
     };
   };
 
@@ -37,7 +39,16 @@ var taskController = (function() {
         tasks.splice(index, 1);
       }
     },
-    filterTasks: function() {},
+    toggleTask: function(id) {
+      var ids, index;
+      ids = tasks.map(function(current) {
+        return current.id;
+      });
+      index = ids.indexOf(id);
+      if (index !== -1) {
+        tasks[index].toggleState();
+      }
+    },
     testing: function() {
       console.log(tasks);
     }
@@ -52,9 +63,9 @@ var UIController = (function() {
     submitBtn: '.submit-btn',
     filterInput: '#filter',
     filterBtn: '.filter-btn',
-    uncheckedBtn: '.far, .fa-circle',
-    checkedBtn: '.far, .fa-check-circle',
-    deleteBtn: '.fas, .fa-backspace',
+    uncheckedBtn: 'far fa-circle',
+    checkedBtn: 'far fa-check-circle',
+    deleteBtn: 'fas fa-backspace',
     taskList: '.collection'
   };
 
@@ -74,11 +85,11 @@ var UIController = (function() {
       html = `
       <li class="collection__item" id="item-${obj.id}">
         <span class="text">${obj.text}</span>
-        <span class="deadline">Deadline: ${obj.deadline}</span>
         <div class="icons">
           <i class="far fa-circle"></i>
           <i class="fas fa-backspace"></i>
         </div>
+        <span class="deadline">Deadline: ${obj.deadline}</span>
       </li>
       `;
       document
@@ -89,6 +100,40 @@ var UIController = (function() {
       var element;
       element = document.querySelector(`#${selectorID}`);
       element.parentNode.removeChild(element);
+    },
+    toggleTask: function(selectorID) {
+      var icon, text;
+      icon = document.querySelector(`#${selectorID}`).children[1].children[0];
+      text = document.querySelector(`#${selectorID}`).children[0];
+      if (icon.className === DOMStrings.checkedBtn) {
+        icon.className = DOMStrings.uncheckedBtn;
+        text.style.textDecoration = 'none';
+      } else if (icon.className === DOMStrings.uncheckedBtn) {
+        icon.className = DOMStrings.checkedBtn;
+        text.style.textDecoration = 'line-through';
+      }
+    },
+    filterTasks: function(tasks) {
+      var filterValue, filteredTasks, html, taskList;
+      filterValue = document.querySelector(DOMStrings.filterInput).value;
+      taskList = document.querySelector(DOMStrings.taskList);
+
+      filteredTasks = tasks.filter(function(task) {
+        return task.deadline == filterValue || task.isDone == filterValue;
+      });
+      filteredTasks.forEach(function(task) {
+        html += `
+        <li class="collection__item" id="item-${task.id}">
+          <span class="text">${task.text}</span>
+          <div class="icons">
+            <i class="far fa-circle"></i>
+            <i class="fas fa-backspace"></i>
+          </div>
+          <span class="deadline">Deadline: ${task.deadline}</span>
+        </li>
+        `;
+      });
+      taskList.innerHTML = html;
     },
     clearFields: function() {
       document.querySelector(DOMStrings.taskInput).value = '';
@@ -115,8 +160,30 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
       .querySelector(DOM.taskList)
       .addEventListener('click', ctrlDeleteTask);
     document
+      .querySelector(DOM.taskList)
+      .addEventListener('click', ctrlToggleTask);
+    document
       .querySelector(DOM.filterBtn)
       .addEventListener('click', ctrlFilterTasks);
+  };
+  var ctrlDisplayTasks = function() {
+    var tasks, taskList, html, DOM;
+    DOM = UICtrl.getDOMStrings();
+    tasks = tasksCtrl.getTasks();
+    taskList = document.querySelector(DOM.taskList);
+    tasks.forEach(function(task) {
+      html += `
+      <li class="collection__item" id="item-${task.id}">
+        <span class="text">${task.text}</span>
+        <div class="icons">
+          <i class="far fa-circle"></i>
+          <i class="fas fa-backspace"></i>
+        </div>
+        <span class="deadline">Deadline: ${task.deadline}</span>
+      </li>
+      `;
+    });
+    taskList.innerHTML = html;
   };
   var ctrlAddTask = function() {
     var input, newTask;
@@ -130,7 +197,9 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
   };
   var ctrlDeleteTask = function(event) {
     var itemID, splitID, ID;
-    itemID = event.target.parentNode.parentNode.id;
+    if (event.target.className === 'fas fa-backspace') {
+      itemID = event.target.parentNode.parentNode.id;
+    }
     if (itemID) {
       splitID = itemID.split('-');
       type = splitID[0];
@@ -139,7 +208,32 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
       UICtrl.deleteListItem(itemID);
     }
   };
-  var ctrlFilterTasks = function() {};
+  var ctrlToggleTask = function(event) {
+    var itemID, splitID, ID;
+    if (event.target.className === 'far fa-circle' || 'far fa-check-circle') {
+      itemID = event.target.parentNode.parentNode.id;
+    }
+    if (itemID) {
+      splitID = itemID.split('-');
+      type = splitID[0];
+      ID = +splitID[1];
+      tasksCtrl.toggleTask(ID);
+      UICtrl.toggleTask(itemID);
+    }
+  };
+  var ctrlFilterTasks = function() {
+    var tasks, filterValue, DOM;
+    DOM = UICtrl.getDOMStrings();
+    tasks = tasksCtrl.getTasks();
+    filterValue = document.querySelector(DOM.filterInput).value;
+    if (filterValue === 'no filter') {
+      ctrlDisplayTasks();
+    } else {
+      UICtrl.filterTasks(tasks);
+    }
+
+    event.preventDefault();
+  };
 
   return {
     init: function() {

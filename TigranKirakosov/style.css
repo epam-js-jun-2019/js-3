@@ -89,7 +89,7 @@ body {
 .collection {
   display: flex;
   flex-direction: column;
-  width: 35rem;
+  width: 50rem;
   text-align: center;
 }
 
@@ -110,19 +110,22 @@ body {
 }
 
 .collection__item {
-  position: relative;
   display: flex;
   height: 3rem;
 }
 
+.text {
+  flex-basis: 30rem;
+  text-align: left;
+}
+
 .icons {
-  position: absolute;
-  right: 0;
+  flex-basis: 6rem;
   cursor: pointer;
 }
 
 .deadline {
-  position: absolute;
-  right: -15rem;
+  flex-basis: 16rem;
+  text-align: left;
   color: var(--color-grey-light-2);
 }
