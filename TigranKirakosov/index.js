@@ -24,37 +24,18 @@ var UIController = (function() {
     getDOMStrings: function() {
       return DOMStrings;
     },
-    addListItem: function(obj) {
-      var html;
-      html = `
-      <li class="collection__item" id="item-${obj.id}">
-        <span class="text">${obj.text}</span>
-        <div class="icons">
-          <i class="${obj.iconClass}"></i>
-          <i class="fas fa-backspace"></i>
-        </div>
-        <span class="deadline">Deadline: ${obj.deadline}</span>
-      </li>
-      `;
-      document
-        .querySelector(DOMStrings.taskList)
-        .insertAdjacentHTML('beforeend', html);
-    },
     deleteListItem: function(selectorID) {
       var element;
       element = document.querySelector(`#${selectorID}`);
       element.parentNode.removeChild(element);
     },
     toggleTask: function(selectorID) {
-      var icon, text;
+      var icon;
       icon = document.querySelector(`#${selectorID}`).children[1].children[0];
-      text = document.querySelector(`#${selectorID}`).children[0];
       if (icon.className === DOMStrings.checkedBtn) {
         icon.className = DOMStrings.uncheckedBtn;
-        text.style.textDecoration = 'none';
       } else if (icon.className === DOMStrings.uncheckedBtn) {
         icon.className = DOMStrings.checkedBtn;
-        text.style.textDecoration = 'line-through';
       }
     },
     filterTasks: function(tasks) {
@@ -80,6 +61,9 @@ var UIController = (function() {
       });
       taskList.innerHTML = html;
     },
+    clearTasks: function() {
+      document.querySelector(DOMStrings.taskList).innerHTML = '';
+    },
     clearFields: function() {
       document.querySelector(DOMStrings.taskInput).value = '';
       document.querySelector(DOMStrings.deadlineInput).value = 'no deadline';
@@ -88,40 +72,92 @@ var UIController = (function() {
   };
 })();
 
-var taskController = (function(UICtrl) {
-  var Task, tasks, DOM;
+var storageController = (function(UICtrl) {
+  var tasks, toggle, DOM;
+  if (
+    localStorage.getItem('tasks') === null ||
+    localStorage.getItem('tasks') === ''
+  ) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
   DOM = UICtrl.getDOMStrings();
+  toggle = function() {
+    if (this.isDone === 'undone') {
+      this.isDone = 'done';
+      this.iconClass = DOM.checkedBtn;
+    } else if (this.isDone === 'done') {
+      this.isDone = 'undone';
+      this.iconClass = DOM.uncheckedBtn;
+    }
+  };
+  return {
+    getFromLS: function() {
+      return tasks;
+    },
+    addToLS: function(task) {
+      tasks.push(task);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    },
+    deleteFromLS: function(id) {
+      var ids, index;
+      tasks;
+      ids = tasks.map(function(current) {
+        return current.id;
+      });
+      index = ids.indexOf(id);
+      if (index !== -1) {
+        tasks.splice(index, 1);
+      }
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    },
+    toggleTask: function(id) {
+      var ids, index;
+      ids = tasks.map(function(current) {
+        return current.id;
+      });
+      index = ids.indexOf(id);
+      if (index !== -1) {
+        toggle.call(tasks[index]);
+      }
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    },
+    clearLS: function() {
+      tasks = [];
+      localStorage.setItem('tasks', []);
+    }
+  };
+})(UIController);
 
+var taskController = (function(UICtrl, storageCtrl) {
+  var Task, tasks, DOM;
+  tasks = storageCtrl.getFromLS();
+  DOM = UICtrl.getDOMStrings();
   Task = function(id, text, deadline) {
     this.id = id;
     this.text = text;
     this.deadline = deadline;
     this.isDone = 'undone';
     this.iconClass = DOM.uncheckedBtn;
-    this.toggleState = function() {
-      if (this.isDone === 'undone') {
-        this.isDone = 'done';
-        this.iconClass = DOM.checkedBtn;
-      } else if (this.isDone === 'done') {
-        this.isDone = 'undone';
-        this.iconClass = DOM.uncheckedBtn;
-      }
-    };
+  };
+  Task.prototype.toggleState = function() {
+    if (this.isDone === 'undone') {
+      this.isDone = 'done';
+      this.iconClass = DOM.checkedBtn;
+    } else if (this.isDone === 'done') {
+      this.isDone = 'undone';
+      this.iconClass = DOM.uncheckedBtn;
+    }
   };
 
-  tasks = [];
-
   return {
-    getTasks: function() {
-      return tasks;
-    },
     addTask: function(text, deadline) {
       var newTask, ID;
       if (tasks.length > 0) ID = tasks[tasks.length - 1].id + 1;
       else ID = 0;
 
       newTask = new Task(ID, text, deadline);
-      tasks.push(newTask);
 
       return newTask;
     },
@@ -147,18 +183,14 @@ var taskController = (function(UICtrl) {
     },
     clearTasks: function() {
       tasks = [];
-    },
-    testing: function() {
-      console.log(tasks);
     }
   };
-})(UIController);
-
-var storageController = (function() {})();
+})(UIController, storageController);
 
 var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
   var DOM = UICtrl.getDOMStrings();
   var setUpEventListeners = function() {
+    document.addEventListener('DOMContentLoaded', ctrlDisplayTasks);
     document
       .querySelector(DOM.submitBtn)
       .addEventListener('click', ctrlAddTask);
@@ -184,7 +216,7 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
   var ctrlDisplayTasks = function() {
     var tasks, taskList;
     var html = '';
-    tasks = tasksCtrl.getTasks();
+    tasks = storageCtrl.getFromLS();
     taskList = document.querySelector(DOM.taskList);
     tasks.forEach(function(task) {
       html += `
@@ -202,13 +234,14 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
   };
   var ctrlAddTask = function() {
     var input, newTask;
+    event.preventDefault();
     input = UICtrl.getInput();
     if (input.text !== '') {
       newTask = tasksCtrl.addTask(input.text, input.deadline, input.state);
-      UICtrl.addListItem(newTask);
+      storageCtrl.addToLS(newTask);
+      ctrlDisplayTasks();
       UICtrl.clearFields();
     }
-    event.preventDefault();
   };
   var ctrlDeleteTask = function(event) {
     var itemID, splitID, ID;
@@ -220,6 +253,7 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
       type = splitID[0];
       ID = +splitID[1];
       tasksCtrl.deleteTask(ID);
+      storageCtrl.deleteFromLS(ID);
       UICtrl.deleteListItem(itemID);
     }
   };
@@ -232,14 +266,14 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
       splitID = itemID.split('-');
       type = splitID[0];
       ID = +splitID[1];
-      tasksCtrl.toggleTask(ID);
+      storageCtrl.toggleTask(ID);
       UICtrl.toggleTask(itemID);
     }
   };
   var ctrlFilterTasks = function() {
     var tasks, filterValue, DOM;
     DOM = UICtrl.getDOMStrings();
-    tasks = tasksCtrl.getTasks();
+    tasks = storageCtrl.getFromLS();
     filterValue = document.querySelector(DOM.filterInput).value;
     if (filterValue === 'no filter') {
       ctrlDisplayTasks();
@@ -249,15 +283,15 @@ var controller = (function(tasksCtrl, UICtrl, storageCtrl) {
     event.preventDefault();
   };
   var ctrlClearTasks = function() {
-    tasksCtrl.clearTasks();
-    ctrlDisplayTasks();
-    document.querySelector(DOM.filterInput).value = 'no filter';
     event.preventDefault();
+    tasksCtrl.clearTasks();
+    storageCtrl.clearLS();
+    UICtrl.clearTasks();
+    document.querySelector(DOM.filterInput).value = 'no filter';
   };
 
   return {
     init: function() {
-      console.log('Application started.');
       setUpEventListeners();
     }
   };
