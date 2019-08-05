@@ -29,9 +29,7 @@ var UIController = (function() {
       element = document.querySelector(`#${selectorID}`);
       element.parentNode.removeChild(element);
     },
-    toggleTask: function(selectorID) {
-      var icon;
-      icon = document.querySelector(`#${selectorID}`).children[1].children[0];
+    toggleTask: function(icon) {
       if (icon.className === DOMStrings.checkedBtn) {
         icon.className = DOMStrings.uncheckedBtn;
       } else if (icon.className === DOMStrings.uncheckedBtn) {
@@ -213,16 +211,17 @@ var controller = (function(UICtrl, storageCtrl) {
     }
   };
   var ctrlToggleTask = function(event) {
-    var itemID, splitID, ID;
+    var itemID, splitID, ID, icon;
     if (event.target.className === DOM.uncheckedBtn || DOM.checkedBtn) {
       itemID = event.target.parentNode.parentNode.id;
+      icon = event.target;
     }
     if (itemID) {
       splitID = itemID.split('-');
       type = splitID[0];
       ID = +splitID[1];
       storageCtrl.toggleTask(ID);
-      UICtrl.toggleTask(itemID);
+      UICtrl.toggleTask(icon);
     }
   };
   var ctrlFilterTasks = function() {
