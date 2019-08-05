@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="custom.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>TO-DO List</h1>
+        <div class="add-task-block">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputEmail1">Task</label>
+                        <input type="text" class="add-task-text form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="What should be done?">
+                        <div class="invalid-feedback">
+                            Field cannot be empty.
+                        </div>
+                        <small id="emailHelp" class="form-text text-muted">Briefly describe the task.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputPassword1">Deadline</label>
+                        <input type="date" class="add-task-deadline form-control" id="exampleInputPassword1"
+                            aria-describedby="dateHelp" placeholder="Password">
+                        <small id="dateHelp" class="form-text text-muted">You cannot change the deadline in the
+                            future.</small>
+                    </div>
+                </div>
+                <button type="submit" class="add-task-btn btn btn-primary">Add task</button>
+            </form>
+        </div>
+        <h2>Tasks</h2>
+        <div class="filters">
+            <span>Sort by status: </span>
+            <select class="task-filter status-filter" name="status">
+                <option value="all">all</option>
+                <option value="completed">completed</option>
+                <option value="incomplete">incomplete</option>
+            </select>
+            <span>Sort by deadline: </span>
+            <select class="task-filter deadline-filter" name="deadline">
+                <option value="all">all</option>
+                <option value="until-tomorrow">until-tomorrow</option>
+                <option value="in-a-week">in a week</option>
+            </select>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="task-list">
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Create todo list</td>
+                    <td>07.08.2019</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary">Mark as complete</button><button
+                            type="button" class="btn btn-outline-danger">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

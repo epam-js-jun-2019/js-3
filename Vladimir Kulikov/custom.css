@@ -1,0 +1,20 @@
+h1, h2 {
+    margin: 40px 0 20px 0;
+}
+
+.add-task-block {
+    background: #eee;
+    padding: 30px;
+}
+
+.dropdown {
+    margin-bottom: 10px;
+}
+
+.filters {
+    padding: 20px 0;
+}
+
+select {
+    margin-right: 20px;
+}
