@@ -16,12 +16,36 @@
         <div class="container">
                 <div class="row">
                     <h1>My ToDo:</h1>
-                    <a class="button" href="#addnewtask" onclick="renderTasks()">Add Task</a>
+                    <a class="button" href="#addnewtask">Add Task</a>
+                
+                <details>
+                        <summary>Filters</summary> 
+                    <div class="row">
+                        
+                        <div class="six columns">
+                            <h5>Status filter</h5>
+                            <div id="setstatusfilter">
+                            <div><input type="radio" name="status_filter" class="" value="null"> Show all tasks</div>
+                            <div><input type="radio" name="status_filter" class="" value="done"> Show only done tasks</div>
+                            <div><input type="radio" name="status_filter" class="" value="undone"> Show only tasks in progress</div>
+                            </div>
+                        </div>
+                        <div class="six columns">
+                                <h5>Deadline filter</h5>
+                                <div id="setdeadlinefilter">
+                                <input type="radio" name="deadline_filter" class="" value="null"> Show all tasks<br>
+                                <input type="radio" name="deadline_filter" class="" value="day"> One day deadline<br>
+                                <input type="radio" name="deadline_filter" class="" value="week"> One week deadline
+                                </div>
+                            </div>
+                       
+                    </div>
+                </details>
                     <table class="u-full-width">
                         <thead>
                             <tr class="head">
                                 <th>Task</th>
-                                <th>Deadline</th>
+                                <th><span id="DLFilter">Deadline</span></th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
