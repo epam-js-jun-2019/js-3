@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>TO-DO list</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="custom.css">
@@ -18,20 +18,19 @@
             <form>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1">Task</label>
-                        <input type="text" class="add-task-text form-control" id="exampleInputEmail1"
-                            aria-describedby="emailHelp" placeholder="What should be done?">
+                        <label for="task">Task</label>
+                        <input type="text" class="add-task-text form-control" id="task" aria-describedby="taskHelp"
+                            placeholder="What should be done?">
                         <div class="invalid-feedback">
                             Field cannot be empty.
                         </div>
-                        <small id="emailHelp" class="form-text text-muted">Briefly describe the task.</small>
+                        <small id="taskHelp" class="form-text text-muted">Briefly describe the task.</small>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="exampleInputPassword1">Deadline</label>
-                        <input type="date" class="add-task-deadline form-control" id="exampleInputPassword1"
-                            aria-describedby="dateHelp" placeholder="Password">
-                        <small id="dateHelp" class="form-text text-muted">You cannot change the deadline in the
-                            future.</small>
+                        <label for="deadline">Deadline</label>
+                        <input type="date" class="add-task-deadline form-control" id="deadline"
+                            aria-describedby="deadlineHelp">
+                        <small id="deadlineHelp" class="form-text text-muted">Format: dd/mm/yyyy</small>
                     </div>
                 </div>
                 <button type="submit" class="add-task-btn btn btn-primary">Add task</button>
@@ -52,28 +51,15 @@
                 <option value="in-a-week">in a week</option>
             </select>
         </div>
-
-
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Task</th>
                     <th scope="col">Deadline</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody class="task-list">
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Create todo list</td>
-                    <td>07.08.2019</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-primary">Mark as complete</button><button
-                            type="button" class="btn btn-outline-danger">Remove</button>
-                    </td>
-                </tr>
-            </tbody>
+            <tbody class="task-list"></tbody>
         </table>
     </div>
 

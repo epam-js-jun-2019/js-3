@@ -108,7 +108,6 @@ var todo = (function () {
     var createNode = function (task) {
         var tr = document.createElement('tr');
         tr.setAttribute('data-id', task.id);
-        var id = document.createElement('th');
         var text = document.createElement('td');
         text.textContent = task.task;
         var deadline = document.createElement('td');
@@ -133,7 +132,7 @@ var todo = (function () {
             var controls = appendAll(controls, [completeBtn, removeBtn]);
         }
 
-        var node = appendAll(tr, [id, text, deadline, controls]);
+        var node = appendAll(tr, [text, deadline, controls]);
         return node;
     }
 
