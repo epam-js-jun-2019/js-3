@@ -12,13 +12,22 @@ body {
   justify-content: center;
 }
 
+form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
 .todo-app {
   display: flex;
   flex-direction: column;
   border: black 1px solid;
+  padding: 0 5px;
 }
 
-.todo {
+.todo,
+.todo-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,7 +41,18 @@ body {
 
 /* --------------------todo chunks--------------------*/
 .todo__text {
+  width: 150px;
+  text-align: center;
 }
 
-.progress-switch {
+.todo__deadline {
+  width: 80px;
+}
+
+.todo__progress {
+  width: 60px;
+}
+
+.todo__delete {
+  width: 100px;
 }
