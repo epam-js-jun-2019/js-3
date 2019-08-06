@@ -20,13 +20,13 @@
                 <span>by deadline</span>
                 <a class="button sort-tomorrow">tomorrow</a>
                 <a class="button sort-week">week</a>
-                <a class="button button-primary add-new">add new task</a>
+                <a class="button button-primary add-new-task">add new task</a>
             </nav>
         </header>
         <section class="todo-list">
             <div class="tasks-container">
                 <!--<section class="task task-checked" id="idx-%ID%">
-                    <nav class="task__edit-panel">
+                    <nav class="task__edit">
                         <button class="ion-button task-check"><i class="ion-icon ion-md-checkmark"></i></button>
                         <button class="ion-button task-delete"><i class="ion-icon ion-md-close"></i></button>
                     </nav>
@@ -40,22 +40,25 @@
                     </div>
                 </section>-->
             </div>
-            <section class="add-form">
-                <form class="new-task-form">
-                    <h6 class="new-task-header">new task</h6>
-                    <input type="text" class="add-title" placeholder="task title">
-                    <textarea class="add-description" rows="8" placeholder="task description"></textarea>
+            <section class="new-task">
+                <form class="new-task__form">
+                    <h6 class="new-task__header-wrapper">
+                        <span class="new-task__header">new task</span>
+                        <i class="ion-icon ion-md-close form-close"></i>
+                    </h6>
+                    <input type="text" class="new-task__title" placeholder="task title">
+                    <textarea class="new-task__description" rows="8" placeholder="task description"></textarea>
                     <div class="form-footer">
-                        <input type="button" class="button-primary save-button" value="save">
+                        <input type="button" class="button button-primary save-button" value="save">
                         <div class="deadline-radios">
                             <span>deadline:</span>
                             <div class="radio-wrapper">
-                                <label><input type="radio" class="add-deadline" name="set-deadline" value="none">none</label>
-                                <label><input type="radio" class="add-deadline" name="set-deadline" value="day">day</label>
-                                <label><input type="radio" class="add-deadline" name="set-deadline" value="week">week</label>
-                            </div>                        
+                                <label><input type="radio" class="new-task__deadline" name="set-deadline" value="none">none</label>
+                                <label><input type="radio" class="new-task__deadline" name="set-deadline" value="day">day</label>
+                                <label><input type="radio" class="new-task__deadline" name="set-deadline" value="week">week</label>
+                            </div>
                         </div>
-                    </div>                                        
+                    </div>
                 </form>
             </section>
         </section>

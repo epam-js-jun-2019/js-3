@@ -17,8 +17,8 @@ var dataController = (function () {
         getTasks: function () {
             if (localStorage.getItem('allTasks') === null) {
                 return allTasks = [];
-            } 
-            return allTasks = JSON.parse(localStorage.getItem('allTasks'));            
+            }
+            return allTasks = JSON.parse(localStorage.getItem('allTasks'));
         },
 
         // create the new task
@@ -35,8 +35,8 @@ var dataController = (function () {
             var thisDay = (new Date()).getDate();
             date = thisDay + ' ' + thisMonth;
             // create new task instance with the created id
-            newTask = new Task(id, date, title, descr, deadline);        
-            
+            newTask = new Task(id, date, title, descr, deadline);
+
             return newTask;
         },
 
@@ -48,7 +48,6 @@ var dataController = (function () {
 
         // delete task by id
         deleteTask: function (delId) {
-            console.log(allTasks);
             // find the index of deleting task in the data structure
             var idx = allTasks.reduce(function (acc, cur, i) {
                 if (cur['id'] === parseInt(delId)) {
@@ -56,7 +55,6 @@ var dataController = (function () {
                 };
                 return acc;
             }, -1);
-            console.log(idx);
 
             allTasks.splice(idx, 1);
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
@@ -72,7 +70,6 @@ var dataController = (function () {
                 };
                 return acc;
             }, -1);
-            console.log(idx);
 
             if (!allTasks[idx].checked) {
                 allTasks[idx].checked = true;
@@ -110,18 +107,21 @@ var dataController = (function () {
 var UIController = (function () {
 
     var DOMselectors = {
-        inputHeader: '.new-task-header',
-        inputTitle: '.add-title',
-        inputDescr: '.add-description',
-        inputDeadline: '.radio-wrapper input',
-        saveButton: '.save-button',  
+        inputHeader: '.new-task__header',
+        inputTitle: '.new-task__title',
+        inputDescr: '.new-task__description',
+        inputDeadline: '.new-task__deadline',
+        saveButton: '.save-button',
         deleteButton: 'task-delete',
         checkButton: 'task-check',
         tasksContainer: '.tasks-container',
         sortDayBtn: '.sort-tomorrow',
         sortWeekBtn: '.sort-week',
         sortDoneBtn: '.sort-done',
-        sortUndoneBtn: '.sort-undone'
+        sortUndoneBtn: '.sort-undone',
+        openFormBtn: '.add-new-task',
+        closeFormBtn: '.form-close',
+        formContainer: '.new-task'
     }
 
     return {
@@ -129,8 +129,8 @@ var UIController = (function () {
         renderTask: function (taskObj) {
             var html, newHtml, container;
 
-            // 1 create html string with placeholder text
-            html = '<section class="task" id="idx-%ID%"><nav class="task__edit-panel">' +
+            // create html string with placeholder text
+            html = '<section class="task" id="idx-%ID%"><nav class="task__edit">' +
                 '<button class="ion-button task-check"><i class="ion-icon ion-md-checkmark">' +
                 '</i ></button ><button class="ion-button task-delete"><i class="ion-icon ion-md-close">' +
                 '</i ></button ></nav ><div class="task__content"><h6 class="task__title">' +
@@ -138,19 +138,21 @@ var UIController = (function () {
                 '<div class="task__meta-info"><span class="task__date">date: %DATE%</span>' +
                 '<span class="task__deadline">deadline: %DEADLINE%</span></div></section>';
 
-            // 2 replace the placeholders with new task data
+            // replace the placeholders with new task data
             newHtml = html.replace('%ID%', taskObj.id)
                           .replace('%DATE%', taskObj.date)
-                          .replace('%DEADLINE%', taskObj.deadline)
+                          .replace('%DEADLINE%', taskObj.deadline || 'none')
                           .replace('%TITLE%', taskObj.title)
                           .replace('%DESCRIPTION%', taskObj.description);
+
+            // toggle the highlight class
             if (taskObj.checked) {
                 newHtml = newHtml.replace('class="task"', 'class="task task-checked"');
             } else if (!taskObj.checked) {
                 newHtml = newHtml.replace('class="task task-checked"', 'class="task"');
             };
 
-            // 3 insert our html chunk into the DOM
+            // insert our html chunk into the DOM
             container = DOMselectors.tasksContainer;
             document.querySelector(container).insertAdjacentHTML('beforeend', newHtml);
         },
@@ -200,6 +202,14 @@ var UIController = (function () {
             }
         },
 
+        openForm: function () {
+            document.querySelector(DOMselectors.formContainer).style.display = 'block';
+        },
+
+        closeForm: function () {
+            document.querySelector(DOMselectors.formContainer).style.display = 'none';
+        },
+
         getSelectors: function () {
             return DOMselectors;
         }
@@ -221,27 +231,29 @@ var appController = (function (dataCtrl, UICtrl) {
         document.querySelector(DOMselectors.sortUndoneBtn).addEventListener('click', ctrlSortByUndone);
         document.querySelector(DOMselectors.sortDayBtn).addEventListener('click', ctrlSortByDay);
         document.querySelector(DOMselectors.sortWeekBtn).addEventListener('click', ctrlSortByWeek);
+        document.querySelector(DOMselectors.openFormBtn).addEventListener('click', ctrlOpenForm);
+        document.querySelector(DOMselectors.closeFormBtn).addEventListener('click', ctrlCloseForm);
     };
 
     var ctrlAddTask = function () {
         var inputData, inputHeader, newTask;
         inputHeader = document.querySelector(DOMselectors.inputHeader);
 
-        // 1 get the input data from UI
+        // get the input data from UI
         inputData = UICtrl.getData();
 
         // check that the input fields are filled
         if(inputData.title !== '' && inputData.description !== '') {
-            // 2 add the task item to the data controller
+            // add the task item to the data controller
             newTask = dataCtrl.createTask(inputData.title, inputData.description, inputData.deadline);
             dataCtrl.addTask(newTask);
-            // 3 add the task item to the UI
+            // add the task item to the UI
             UICtrl.renderTask(newTask);
 
-            // 4 clear the input fields
+            // clear the input fields
             UICtrl.clearFields();
 
-            // 5 repaint the input header
+            // repaint the input header
             inputHeader.innerHTML = 'new task';
         } else {
             inputHeader.innerHTML = 'fill in all fields';
@@ -322,6 +334,14 @@ var appController = (function (dataCtrl, UICtrl) {
         allTasks.forEach(function (item) {
             UICtrl.renderTask(item);
         })
+    };
+
+    var ctrlOpenForm = function() {
+        UICtrl.openForm();
+    };
+
+    var ctrlCloseForm = function() {
+        UICtrl.closeForm();
     };
 
     return {
