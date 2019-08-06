@@ -1,5 +1,9 @@
-/* Grid
+/* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+html {
+  font-size: 62.5%;
+}
+
 .main-container {
   width: 100%;
   max-width: 960px;
@@ -7,28 +11,6 @@
   padding: 0 20px;
   /* background-color: lightgreen; */
   box-sizing: border-box;
-}
-
-/* For devices larger than 400px */
-@media (min-width: 400px) {
-  .main-container {
-    width: 85%;
-    padding: 0;
-  }
-}
-
-/* For devices larger than 550px */
-@media (min-width: 550px) {
-  .main-container {
-    width: 80%;
-  }
-}
-
-
-/* Base Styles
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-html {
-  font-size: 62.5%;
 }
 
 body {
@@ -178,6 +160,7 @@ input[type="text"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
 input[type="password"]:focus,
+input[type="checkbox"]:focus,
 textarea:focus,
 select:focus {
   border: 1px solid #33C3F0;
@@ -208,53 +191,194 @@ label > .label-body {
 }
 
 
+/* Lists
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+ul {
+  list-style: circle inside;
+}
+
+ol {
+  list-style: decimal inside;
+}
+
+ol, ul {
+  padding-left: 0;
+  margin-top: 0;
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%;
+
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+
 /* Custom Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .task-menu {
-  padding: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
 }
 
 .navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .todo-list {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .tasks-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  width: 70%;
-  padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 70%;
 }
 
 .task {
-  max-width: 30vw;
-  padding: 1vw;
-  margin: .5vw;
-  border: 1px solid #D1D1D1;
-  border-radius: 4px;
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25%;
+    max-width: 25%;
+    padding: 3%;
+    margin-top: 1%;
+    margin-right: 1%;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, .2);
+    overflow: auto;
+}
+
+.task-checked {
+    border: 1px solid #33C3F0;
+    box-shadow: 0 0 4px 4px rgba(51, 195, 240, .2);
+}
+
+.task:hover .task__edit-panel {
+    display: flex;
+}
+
+.task:hover .task__meta-info {
+    display: flex;
+}
+
+.task__edit-panel {
+    display: none;
+    justify-content: flex-end;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.task__edit-panel li {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.task__title,
+.task__description {
+    width: 100%;
+    border-bottom: 1px solid #33C3F0;
+}
+
+.task__meta-info {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.task__date,
+.task__deadline {
+    display: block;
+}
+
+.ion-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    display: inline-block;
+    font-size: 18px;
+    line-height: 20px;
+    vertical-align: middle;
+    border: none;
+}
+
+.ion-md-checkmark {
+    color: #33C3F0;
 }
 
 .add-form {
-  width: 30%;
+    width: 30%;
 }
 
 .new-task-form {
-  /* max-width: 100%; */
-  padding: 1vw;
-  border: 1px solid #33C3F0;
-  border-radius: 4px;
+    padding: 1vw;
+    border: 1px solid #33C3F0;
+    border-radius: 4px;
 }
 
 .add-title,
 .add-description {
-  width: 100%;
-  margin-bottom: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.add-description {
+    height: auto;
+    overflow: auto;
+    resize: none;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deadline-radios {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.radio-wrapper {
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+    .main-container {
+        width: 85%;
+        padding: 0;
+    }
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+    .main-container {
+        width: 80%;
+    }
 }

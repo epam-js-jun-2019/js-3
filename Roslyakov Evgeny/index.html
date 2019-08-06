@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,38 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href='//fonts.googleapis.com/css?family=Raleway:100,300,400,600' rel='stylesheet' type='text/css'>
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
 <body>
-<div class="main-container">
-    <header class="task-menu">
-        <nav class="navigation">
-          <span>task sort</span>
-          <a class="button sort-done">checked</a>
-          <a class="button sort-undone">pending</a>
-          <span>by deadline</span>
-          <a class="button sort-tomorrow">tomorrow</a>
-          <a class="button sort-week">week</a>
-          <a class="button button-primary add-new">add new task</a>
-        </nav>
-    </header>
-    <section class="todo-list">
-        <section class="tasks-container">
-          <!-- <div class="task" id="idx-%id%">
-            <h6 class="task-title">%TITLE%</h6>
-            <p class="task-description">%DESCRIPTION%</p>
-          </div> -->
+    <div class="main-container">
+        <header class="task-menu">
+            <nav class="navigation">
+                <span>task sort</span>
+                <a class="button sort-done">checked</a>
+                <a class="button sort-undone">pending</a>
+                <span>by deadline</span>
+                <a class="button sort-tomorrow">tomorrow</a>
+                <a class="button sort-week">week</a>
+                <a class="button button-primary add-new">add new task</a>
+            </nav>
+        </header>
+        <section class="todo-list">
+            <div class="tasks-container">
+                <!--<section class="task" id="idx-%ID%">
+                    <nav class="task__edit-panel">
+                        <button class="ion-button task-check"><i class="ion-icon ion-md-checkmark"></i></button>
+                        <button class="ion-button task-delete"><i class="ion-icon ion-md-close"></i></button>
+                    </nav>
+                    <div class="task__content">
+                        <h6 class="task__title">%TITLE%</h6>
+                        <div class="task__description"><span>%DESCRIPTION%</span></div>
+                    </div>
+                    <div class="task__meta-info">
+                        <span class="task__date">date: %DATE%</span>
+                        <span class="task__deadline">deadline: %DEADLINE%</span>
+                    </div>
+                </section>-->
+            </div>
+            <section class="add-form">
+                <form class="new-task-form">
+                    <h6 class="new-task-header">new task</h6>
+                    <input type="text" class="add-title" placeholder="task title">
+                    <textarea class="add-description" rows="8" placeholder="task description"></textarea>
+                    <div class="form-footer">
+                        <input type="button" class="button-primary save-button" value="save">
+                        <div class="deadline-radios">
+                            <span>deadline:</span>
+                            <div class="radio-wrapper">
+                                <label><input type="radio" class="add-deadline" name="set-deadline" value="none">none</label>
+                                <label><input type="radio" class="add-deadline" name="set-deadline" value="day">day</label>
+                                <label><input type="radio" class="add-deadline" name="set-deadline" value="week">week</label>
+                            </div>                        
+                        </div>
+                    </div>                                        
+                </form>
+            </section>
         </section>
-        <section class="add-form">
-          <form class="new-task-form">
-            <h6 class="new-task-header">new task</h6>
-            <input type="text" class="add-title" placeholder="task title">
-            <textarea class="add-description" placeholder="task description"></textarea>
-            <input type="button" class="button-primary save-button" value="save">
-          </form>
-        </section>
-    </section>
-</div>
+    </div>
 </body>
 </html>
