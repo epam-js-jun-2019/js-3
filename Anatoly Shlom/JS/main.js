@@ -1,6 +1,9 @@
 var tasklist=JSON.parse(localStorage.getItem("tasklist")) || [];
 var filterCase = {status: null, deadline: null};
+document.getElementById("addtask")
+.addEventListener("click", function (){return addTask()});
 
+//Add new task to list
 function addTask() {
     var task = document.getElementById("task").value;
     var deadline = document.getElementById("deadline").value;
@@ -12,19 +15,19 @@ function addTask() {
     }
     tasklist.push({ task: task, deadline: deadline, done:'0', creationDate: today});
     localStorage.setItem("tasklist", JSON.stringify(tasklist));
-
     render();
     document.getElementById("task").value = "";
     document.getElementById("deadline").value = "1";
-    console.log(tasklist);
 };
 
+//counting deadline date
 function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
 }
 
+//get deadline date due to deadline type
 function getDLdate(param, creationDate) {
     var DLDate;
     this.creationDate=creationDate;
@@ -44,6 +47,7 @@ function getDLdate(param, creationDate) {
     return DLDate;
 }
 
+//start rendering tasks loop
 function render () {
     var table=document.getElementById("start");
     while (table.firstChild) {
@@ -53,13 +57,35 @@ function render () {
     }
 };
 
+//rendering each element
 function renderTasks(i) {
     var table=document.getElementById("start"),
         taskitem = tasklist[i]['task'],
-        dlitem = getDLdate(tasklist[i]['deadline'],tasklist[i]['creationDate']),
         status = tasklist[i]['done'],
 
-        tr = document.createElement("tr");
+//MODULE PATTERN 
+        dlitem = (function () {
+        var dateDL=getDLdate(tasklist[i]['deadline'],tasklist[i]['creationDate']),
+        textDl;
+        switch (tasklist[i].deadline){
+            case '1':
+                textDl="";
+                break;
+            case '2':
+                textDl="Day";
+                break;
+            case '3':
+                textDl="Week";
+                break;
+        }
+        return {
+            date: dateDL,
+            text: textDl
+        }
+    })();
+//END OF MODULE PATTERN
+
+    var tr = document.createElement("tr");
     tr.setAttribute("id", i);
     table.appendChild(tr);
 
@@ -70,12 +96,11 @@ function renderTasks(i) {
         
     var td_Deadline = document.createElement("td");
     tr.appendChild(td_Deadline);
-    var deadl = document.createTextNode(dlitem);
+    var deadl = document.createTextNode(dlitem.date + " (" + dlitem.text +")");
     td_Deadline.appendChild(deadl); 
 
     var td_Status = document.createElement("td");
     td_Status.setAttribute("id", "st"+i);
-
     tr.appendChild(td_Status);
     switch (status){
         case '0': 
@@ -102,9 +127,6 @@ function renderTasks(i) {
     .addEventListener("click", function() {
         tasklist.splice(i,1);
         document.getElementById(i).remove();
-        console.log("Task #"+i+" removed");
-        console.log(tasklist);
-        
         localStorage.setItem("tasklist", JSON.stringify(tasklist));
     });
         
@@ -140,25 +162,24 @@ function renderTasks(i) {
                 break;
         }
         localStorage.setItem("tasklist", JSON.stringify(tasklist));
-        console.log(i);
     });
 };
 
+//filter chek
 (function setfilter () {
     document.getElementById("setstatusfilter")
     .addEventListener("click", function() {
         filterCase.status=document.querySelector('input[name=status_filter]:checked').value
-        console.log(filterCase.status);
         render();
     });
     document.getElementById("setdeadlinefilter")
     .addEventListener("click", function() {
         filterCase.deadline=document.querySelector('input[name=deadline_filter]:checked').value
-        console.log(filterCase.deadline);
         render();
-    });
+    });    
 })();
 
+//rendering tasks according to filter
 function renderfilter_deadline(i){
     switch(filterCase.deadline) {
         case 'day':
