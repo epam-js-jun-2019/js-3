@@ -1,4 +1,4 @@
-var dataController = (function () {
+var modelController = (function () {
 
     var Task = function (id, date, title, description, deadline) {
         this.id = id;
@@ -15,7 +15,7 @@ var dataController = (function () {
     return {
         // get all tasks from local storage
         getTasks: function () {
-            if (localStorage.getItem('allTasks') === null) {
+            if (!localStorage.getItem('allTasks')) {
                 return allTasks = [];
             }
             return allTasks = JSON.parse(localStorage.getItem('allTasks'));
@@ -104,7 +104,7 @@ var dataController = (function () {
 
 
 
-var UIController = (function () {
+var viewController = (function () {
 
     var DOMselectors = {
         inputHeader: '.new-task__header',
@@ -219,8 +219,9 @@ var UIController = (function () {
 
 
 
-var appController = (function (dataCtrl, UICtrl) {
-    var DOMselectors = UICtrl.getSelectors();;
+var appController = (function (modelCtrl, viewCtrl) {
+
+    var DOMselectors = viewCtrl.getSelectors();;
 
     //adding listeners of the app
     var setupListeners = function () {
@@ -240,18 +241,19 @@ var appController = (function (dataCtrl, UICtrl) {
         inputHeader = document.querySelector(DOMselectors.inputHeader);
 
         // get the input data from UI
-        inputData = UICtrl.getData();
+        inputData = viewCtrl.getData();
 
         // check that the input fields are filled
         if(inputData.title !== '' && inputData.description !== '') {
             // add the task item to the data controller
-            newTask = dataCtrl.createTask(inputData.title, inputData.description, inputData.deadline);
-            dataCtrl.addTask(newTask);
+            newTask = modelCtrl.createTask(inputData.title, inputData.description, inputData.deadline);
+            modelCtrl.addTask(newTask);
+
             // add the task item to the UI
-            UICtrl.renderTask(newTask);
+            viewCtrl.renderTask(newTask);
 
             // clear the input fields
-            UICtrl.clearFields();
+            viewCtrl.clearFields();
 
             // repaint the input header
             inputHeader.innerHTML = 'new task';
@@ -271,10 +273,10 @@ var appController = (function (dataCtrl, UICtrl) {
             splitId = itemId.split('-')[1];
 
             // delete item from UI based on id
-            UICtrl.removeTask(itemId);
+            viewCtrl.removeTask(itemId);
 
             // delete item from the data storage
-            dataCtrl.deleteTask(splitId);
+            modelCtrl.deleteTask(splitId);
         }
     };
 
@@ -287,61 +289,60 @@ var appController = (function (dataCtrl, UICtrl) {
             // compute id of deleting item
             splitId = itemId.split('-')[1];
 
-
             // rewrite task to the data storage
-            dataCtrl.checkTask(splitId);
+            modelCtrl.checkTask(splitId);
 
             // highlight the task in the UI
-            UICtrl.checkTask(itemId);
+            viewCtrl.checkTask(itemId);
         }
     };
 
     var ctrlSortByDone = function () {
-        var doneTasks = dataCtrl.sortByDone(true);
-        UICtrl.removeAll();
+        var doneTasks = modelCtrl.sortByDone(true);
+        viewCtrl.removeAll();
         doneTasks.forEach(function (item) {
-            UICtrl.renderTask(item);
+            viewCtrl.renderTask(item);
         });
     };
 
     var ctrlSortByUndone = function () {
-        var undoneTasks = dataCtrl.sortByDone(false);
-        UICtrl.removeAll();
+        var undoneTasks = modelCtrl.sortByDone(false);
+        viewCtrl.removeAll();
         undoneTasks.forEach(function (item) {
-            UICtrl.renderTask(item);
+            viewCtrl.renderTask(item);
         });
     };
 
     var ctrlSortByDay = function () {
-        var dailyTasks = dataCtrl.sortByDeadline('day');
-        UICtrl.removeAll();
+        var dailyTasks = modelCtrl.sortByDeadline('day');
+        viewCtrl.removeAll();
         dailyTasks.forEach(function (item) {
-            UICtrl.renderTask(item);
+            viewCtrl.renderTask(item);
         });
     };
 
     var ctrlSortByWeek = function () {
-        var weeklyTasks = dataCtrl.sortByDeadline('week');
-        UICtrl.removeAll();
+        var weeklyTasks = modelCtrl.sortByDeadline('week');
+        viewCtrl.removeAll();
         weeklyTasks.forEach(function (item) {
-            UICtrl.renderTask(item);
+            viewCtrl.renderTask(item);
         });
     };
 
     // re-render the main page in case of page refreshing
     var repaintMainPage = function () {
-        var allTasks = dataCtrl.getTasks();
+        var allTasks = modelCtrl.getTasks();
         allTasks.forEach(function (item) {
-            UICtrl.renderTask(item);
+            viewCtrl.renderTask(item);
         })
     };
 
     var ctrlOpenForm = function() {
-        UICtrl.openForm();
+        viewCtrl.openForm();
     };
 
     var ctrlCloseForm = function() {
-        UICtrl.closeForm();
+        viewCtrl.closeForm();
     };
 
     return {
@@ -352,6 +353,6 @@ var appController = (function (dataCtrl, UICtrl) {
         }
     };
 
-})(dataController, UIController);
+})(modelController, viewController);
 
 appController.init();
