@@ -1,5 +1,17 @@
 var todo = (function () {
 
+    var DOMSelectors = {
+        addTaskInput: '.add-task-text',
+        addTaskDeadlineInput: '.add-task-deadline',
+        statusFilterSelect: '.status-filter',
+        deadlineFilterSelect: '.deadline-filter',
+        tasksListTbody: '.task-list',
+        addTaskBtn: '.add-task-btn',
+        removeTaskBtns: '.remove-task-btn',
+        completeTaskBtns: '.complete-task-btn',
+        filters: '.task-filter'
+    };
+
     var run = function () {
         if (!localStorage.getItem('todoList')) localStorage.setItem('todoList', "[]");
         if (!localStorage.getItem('todoListId')) localStorage.setItem('todoListId', 1);
@@ -8,8 +20,8 @@ var todo = (function () {
 
     var addTask = function (e) {
         e.preventDefault();
-        var task = document.querySelector('.add-task-text');
-        var deadline = document.querySelector('.add-task-deadline');
+        var task = document.querySelector(DOMSelectors.addTaskInput);
+        var deadline = document.querySelector(DOMSelectors.addTaskDeadlineInput);
 
         if (validate(task, deadline)) {
             var tasks = getTasks();
@@ -17,6 +29,7 @@ var todo = (function () {
             tasks.push({ id: id, task: task.value, deadline: deadline.value, completed: false });
             saveTasks(tasks);
             task.value = "";
+            deadline.value = "";
             render();
         }
     }
@@ -55,7 +68,7 @@ var todo = (function () {
     }
 
     var filterByStatus = function (tasks) {
-        var filterParam = document.querySelector('.status-filter').value;
+        var filterParam = document.querySelector(DOMSelectors.statusFilterSelect).value;
         switch (filterParam) {
             case 'completed':
                 completedTasks = tasks.filter(function (task) { return task.completed == true });
@@ -69,7 +82,7 @@ var todo = (function () {
     }
 
     var filterByDeadline = function (tasks) {
-        var filterParam = document.querySelector('.deadline-filter').value;
+        var filterParam = document.querySelector(DOMSelectors.deadlineFilterSelect).value;
 
         if (filterParam == 'until-tomorrow') {
             var afterTomorrow = new Date(new Date().setDate(new Date().getDate() + 2));
@@ -137,7 +150,7 @@ var todo = (function () {
     }
 
     var render = function (filteredTasks) {
-        var parentNode = document.querySelector('.task-list');
+        var parentNode = document.querySelector(DOMSelectors.tasksListTbody);
         while (parentNode.firstChild) {
             parentNode.removeChild(parentNode.firstChild);
         }
@@ -151,20 +164,20 @@ var todo = (function () {
     }
 
     var addEventListeners = function () {
-        var addTaskBtn = document.querySelector('.add-task-btn');
+        var addTaskBtn = document.querySelector(DOMSelectors.addTaskBtn);
         addTaskBtn.addEventListener('click', addTask);
 
-        var removeTaskBtns = document.querySelectorAll('.remove-task-btn');
+        var removeTaskBtns = document.querySelectorAll(DOMSelectors.removeTaskBtns);
         removeTaskBtns.forEach(function (btn) {
             btn.addEventListener('click', removeTask);
         });
 
-        var completeTaskBtns = document.querySelectorAll('.complete-task-btn');
+        var completeTaskBtns = document.querySelectorAll(DOMSelectors.completeTaskBtns);
         completeTaskBtns.forEach(function (btn) {
             btn.addEventListener('click', completeTask);
         });
 
-        var filters = document.querySelectorAll('.task-filter');
+        var filters = document.querySelectorAll(DOMSelectors.filters);
         filters.forEach(function (filter) {
             filter.addEventListener('change', render);
         });
