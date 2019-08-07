@@ -17,7 +17,7 @@ var todo = (function () {
             tasks.push({ id: id, task: task.value, deadline: deadline.value, completed: false });
             saveTasks(tasks);
             task.value = "";
-            applyFilters();
+            render();
         }
     }
 
@@ -28,7 +28,7 @@ var todo = (function () {
             return task.id != id;
         });
         saveTasks(updatedTasks);
-        applyFilters();
+        render();
     }
 
     var completeTask = function () {
@@ -39,10 +39,10 @@ var todo = (function () {
             return task;
         });
         saveTasks(updatedTasks);
-        applyFilters();
+        render();
     }
 
-    var applyFilters = function () {
+    var getFilteredTasks = function () {
         var tasks = getTasks();
         var filters = [filterByStatus, filterByDeadline];
 
@@ -51,7 +51,7 @@ var todo = (function () {
             return acc;
         }, tasks);
 
-        render(filteredTasks);
+        return filteredTasks;
     }
 
     var filterByStatus = function (tasks) {
@@ -141,7 +141,7 @@ var todo = (function () {
         while (parentNode.firstChild) {
             parentNode.removeChild(parentNode.firstChild);
         }
-        var tasks = filteredTasks ? filteredTasks : getTasks();
+        var tasks = getFilteredTasks();
 
         tasks.forEach(function (task) {
             parentNode.appendChild(createNode(task));
@@ -166,7 +166,7 @@ var todo = (function () {
 
         var filters = document.querySelectorAll('.task-filter');
         filters.forEach(function (filter) {
-            filter.addEventListener('change', applyFilters);
+            filter.addEventListener('change', render);
         });
     }
 
