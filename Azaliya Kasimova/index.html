@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="styles.css" rel="stylesheet">
+    <title>TODO list</title>
+  </head>
+  <body>
+    <div class="todo-list">
+      <div class="todo-list__head">TODO list</div>
+      <form>
+        <select class="todo-list__done-filter" id="doneFilter">
+          <option value="all">Все задания</option>
+          <option value="done">Выполненные задания</option>
+          <option value="notdone">Невыполненные задания</option>
+        </select>
+        <select class="todo-list__data-filter" id="dataFilter">
+          <option>Дедлайн</option>
+          <option value="Завтра">Завтра</option>
+          <option value="Неделя">Через неделю</option>
+        </select>
+        <input type="button" value="Применить фильтр"
+         id="doneFilterButton">
+      </form>
+      <div class="todo-list__task" id="addTaskText"></div>
+      <div class="todo-list__add-task">
+        <form>
+          <input class="todo-list__text-value" id="textOfTask" type="text" placeholder="Add new task"> 
+          <input class="todo-list__button" id="addButton" type="button" value="Add">
+        </form>
+      </div>
+    </div>
+    <script src="todolist.js"></script>
+  </body>

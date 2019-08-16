@@ -1,0 +1,27 @@
+.todo-list {
+  width: 600px;
+  background-color: aliceblue;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+.todo-list__head {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+.todo-list__task-quantity {
+  margin-bottom: 10px;
+}
+.todo-list__done-quantity {
+  margin-bottom: 20px;
+}
+.todo-list__task {
+  margin-bottom: 10px;
+}
+.todo-list__data-filter {
+  margin-bottom: 10px;
+}
+.todo-list__done-filter {
+  margin-bottom: 20px;
+}
