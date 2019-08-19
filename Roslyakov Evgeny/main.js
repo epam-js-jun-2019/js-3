@@ -25,11 +25,8 @@ var modelController = (function () {
         createTask: function (title, descr, deadline) {
             var newTask, id, date, deadline;
             // create new id for the new task based on the last task id
-            if(allTasks.length > 0) {
-                id = allTasks[allTasks.length - 1].id + 1;
-            } else {
-                id = 0;
-            }
+            id = (allTasks.length) ? allTasks[allTasks.length - 1].id + 1 : 0;
+
             // create the task date
             var thisMonth = months[(new Date()).getMonth()];
             var thisDay = (new Date()).getDate();
@@ -71,11 +68,7 @@ var modelController = (function () {
                 return acc;
             }, -1);
 
-            if (!allTasks[idx].checked) {
-                allTasks[idx].checked = true;
-            } else {
-                allTasks[idx].checked = false;
-            };
+            allTasks[idx].checked = !allTasks[idx].checked;
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
         },
 
@@ -148,7 +141,7 @@ var viewController = (function () {
             // toggle the highlight class
             if (taskObj.checked) {
                 newHtml = newHtml.replace('class="task"', 'class="task task-checked"');
-            } else if (!taskObj.checked) {
+            } else {
                 newHtml = newHtml.replace('class="task task-checked"', 'class="task"');
             };
 
@@ -159,9 +152,9 @@ var viewController = (function () {
 
         // get checked deadline value
         getDeadline: function () {
-            var res;
+            var res = 'none';
             document.querySelectorAll(DOMselectors.inputDeadline).forEach(function (input) {
-                if (input.checked === true) res = input.value;
+                if (input.checked) res = input.value;
             });
             return res;
         },
@@ -182,15 +175,13 @@ var viewController = (function () {
 
         // delete task from the DOM by ID
         removeTask: function (remId) {
-            var newId = '#' + remId;
-            var temp = document.querySelector(newId);
+            var temp = document.getElementById(remId);
             temp.parentElement.removeChild(temp);
         },
 
         // check task as fulfilled
         checkTask: function (remId) {
-            var newId = '#' + remId;
-            var temp = document.querySelector(newId);
+            var temp = document.getElementById(remId);
             temp.classList.toggle('task-checked');
         },
 
