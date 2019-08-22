@@ -72,20 +72,20 @@ var modelController = (function () {
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
         },
 
-        // sort by deadline
-        sortByDeadline: function (deadline) {
-            var sortedArr = allTasks.filter(function (task) {
+        // filter by deadline
+        filterByDeadline: function (deadline) {
+            var filteredArr = allTasks.filter(function (task) {
                 return task['deadline'] === deadline;
             });
-            return sortedArr;
+            return filteredArr;
         },
 
-        // sort by done / undone
-        sortByDone: function (done) {
-            var sortedArr = allTasks.filter(function (task) {
+        // filter by done / undone
+        filterByDone: function (done) {
+            var filteredArr = allTasks.filter(function (task) {
                 return task['checked'] === done;
             });
-            return sortedArr;
+            return filteredArr;
         },
 
         testing: function () {
@@ -108,10 +108,10 @@ var viewController = (function () {
         deleteButton: 'task-delete',
         checkButton: 'task-check',
         tasksContainer: '.tasks-container',
-        sortDayBtn: '.sort-tomorrow',
-        sortWeekBtn: '.sort-week',
-        sortDoneBtn: '.sort-done',
-        sortUndoneBtn: '.sort-undone',
+        filterDayBtn: '.filter-tomorrow',
+        filterWeekBtn: '.filter-week',
+        filterDoneBtn: '.filter-done',
+        filterUndoneBtn: '.filter-undone',
         openFormBtn: '.add-new-task',
         closeFormBtn: '.form-close',
         formContainer: '.new-task'
@@ -219,10 +219,10 @@ var appController = (function (modelCtrl, viewCtrl) {
         document.querySelector(DOMselectors.saveButton).addEventListener('click', ctrlAddTask);
         document.querySelector(DOMselectors.tasksContainer).addEventListener('click', ctrlDeleteTask);
         document.querySelector(DOMselectors.tasksContainer).addEventListener('click', ctrlCheckTask);
-        document.querySelector(DOMselectors.sortDoneBtn).addEventListener('click', ctrlSortByDone);
-        document.querySelector(DOMselectors.sortUndoneBtn).addEventListener('click', ctrlSortByUndone);
-        document.querySelector(DOMselectors.sortDayBtn).addEventListener('click', ctrlSortByDay);
-        document.querySelector(DOMselectors.sortWeekBtn).addEventListener('click', ctrlSortByWeek);
+        document.querySelector(DOMselectors.filterDoneBtn).addEventListener('click', ctrlfilterByDone);
+        document.querySelector(DOMselectors.filterUndoneBtn).addEventListener('click', ctrlFilterByUndone);
+        document.querySelector(DOMselectors.filterDayBtn).addEventListener('click', ctrlFilterByDay);
+        document.querySelector(DOMselectors.filterWeekBtn).addEventListener('click', ctrlFilterByWeek);
         document.querySelector(DOMselectors.openFormBtn).addEventListener('click', ctrlOpenForm);
         document.querySelector(DOMselectors.closeFormBtn).addEventListener('click', ctrlCloseForm);
     };
@@ -288,32 +288,32 @@ var appController = (function (modelCtrl, viewCtrl) {
         }
     };
 
-    var ctrlSortByDone = function () {
-        var doneTasks = modelCtrl.sortByDone(true);
+    var ctrlfilterByDone = function () {
+        var doneTasks = modelCtrl.filterByDone(true);
         viewCtrl.removeAll();
         doneTasks.forEach(function (item) {
             viewCtrl.renderTask(item);
         });
     };
 
-    var ctrlSortByUndone = function () {
-        var undoneTasks = modelCtrl.sortByDone(false);
+    var ctrlFilterByUndone = function () {
+        var undoneTasks = modelCtrl.filterByDone(false);
         viewCtrl.removeAll();
         undoneTasks.forEach(function (item) {
             viewCtrl.renderTask(item);
         });
     };
 
-    var ctrlSortByDay = function () {
-        var dailyTasks = modelCtrl.sortByDeadline('day');
+    var ctrlFilterByDay = function () {
+        var dailyTasks = modelCtrl.filterByDeadline('day');
         viewCtrl.removeAll();
         dailyTasks.forEach(function (item) {
             viewCtrl.renderTask(item);
         });
     };
 
-    var ctrlSortByWeek = function () {
-        var weeklyTasks = modelCtrl.sortByDeadline('week');
+    var ctrlFilterByWeek = function () {
+        var weeklyTasks = modelCtrl.filterByDeadline('week');
         viewCtrl.removeAll();
         weeklyTasks.forEach(function (item) {
             viewCtrl.renderTask(item);

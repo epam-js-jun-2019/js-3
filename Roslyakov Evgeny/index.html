@@ -14,31 +14,17 @@
     <div class="main-container">
         <header class="task-menu">
             <nav class="navigation">
-                <span>task sort</span>
-                <a class="button sort-done">checked</a>
-                <a class="button sort-undone">pending</a>
+                <span>task filter</span>
+                <a class="button filter-done">checked</a>
+                <a class="button filter-undone">pending</a>
                 <span>by deadline</span>
-                <a class="button sort-tomorrow">tomorrow</a>
-                <a class="button sort-week">week</a>
+                <a class="button filter-tomorrow">tomorrow</a>
+                <a class="button filter-week">week</a>
                 <a class="button button-primary add-new-task">add new task</a>
             </nav>
         </header>
         <section class="todo-list">
             <div class="tasks-container">
-                <!--<section class="task task-checked" id="idx-%ID%">
-                    <nav class="task__edit">
-                        <button class="ion-button task-check"><i class="ion-icon ion-md-checkmark"></i></button>
-                        <button class="ion-button task-delete"><i class="ion-icon ion-md-close"></i></button>
-                    </nav>
-                    <div class="task__content">
-                        <h6 class="task__title">%TITLE%</h6>
-                        <div class="task__description"><span>%DESCRIPTION%</span></div>
-                    </div>
-                    <div class="task__meta-info">
-                        <span class="task__date">date: %DATE%</span>
-                        <span class="task__deadline">deadline: %DEADLINE%</span>
-                    </div>
-                </section>-->
             </div>
             <section class="new-task">
                 <form class="new-task__form">
@@ -54,7 +40,7 @@
                             <span>deadline:</span>
                             <ul class="radio-wrapper">
                                 <li>
-                                    <label><input type="radio" class="new-task__deadline" name="set-deadline" value="none">none</label>
+                                    <label><input type="radio" class="new-task__deadline" name="set-deadline" value="none" checked>none</label>
                                 </li>
                                 <li>
                                     <label><input type="radio" class="new-task__deadline" name="set-deadline" value="day">day</label>
