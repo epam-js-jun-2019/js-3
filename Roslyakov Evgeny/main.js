@@ -59,7 +59,6 @@ var modelController = (function () {
 
         // check task by id
         checkTask: function (checkId) {
-            console.log(allTasks);
             // find the index of checking task in the data structure
             var idx = allTasks.reduce(function (acc, cur, i) {
                 if (cur['id'] === parseInt(checkId)) {
