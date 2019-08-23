@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <title>TO-DO</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+  </head>
+  <body>
+
+    <container>
+
+      <div class="link">
+          <a href="http://www.youtube.com/watch?v=ZXsQAXx_ao0">
+          Please watch a motivation video first,
+          </br>if you don't know the man on a background</a>
+      </div>
+        
+      <h1>TO-DO LIST</h1>
+
+      <h2>What would you like to do?</h2>
+
+      <div class="first__section">
+        <input id="task" type="text"/>
+        <input id="deadline" type="date"/>
+        <button id="add" class="btn">Add a new task!</button>
+      </div>
+      
+      <div class="second__section">
+        <button id="allTasks" class="btn">All tasks</button>
+        <button id="tomorrowTasks" class="btn">Tomorrow tasks</button>
+        <button id="weekTasks" class="btn">Week tasks</button>
+      </div>
+      <div class="first-line-arrow">
+          <p>&#8659</p><p>&#8659</p><p>&#8659</p>
+          <h2>Something to be done</h2>
+          <p>&#8659</p><p>&#8659</p><p>&#8659</p>
+      </div>
+      <ul id="tasksToBeCompleted"></ul>
+      <div class="second-line-arrow">
+          <p>&#8659</p><p>&#8659</p><p>&#8659</p>
+          <h2>Done!</h2>
+          <p>&#8659</p><p>&#8659</p><p>&#8659</p>
+      </div>
+      <ul id="completedTasks"></ul>
+
+    </container>
+
+  </body>
+  <script src="js/todo.js"></script>
+</html>
