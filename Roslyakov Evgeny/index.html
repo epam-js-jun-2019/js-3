@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href='//fonts.googleapis.com/css?family=Raleway:100,300,400,600' rel='stylesheet' type='text/css'>
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <header class="task-menu">
+            <nav class="navigation">
+                <span>task filter</span>
+                <a class="button filter-done">checked</a>
+                <a class="button filter-undone">pending</a>
+                <span>by deadline</span>
+                <a class="button filter-tomorrow">tomorrow</a>
+                <a class="button filter-week">week</a>
+                <a class="button button-primary add-new-task">add new task</a>
+            </nav>
+        </header>
+        <section class="todo-list">
+            <div class="tasks-container">
+            </div>
+            <section class="new-task">
+                <form class="new-task__form">
+                    <h6 class="new-task__header-wrapper">
+                        <span class="new-task__header">new task</span>
+                        <i class="ion-icon ion-md-close form-close"></i>
+                    </h6>
+                    <input type="text" class="new-task__title" placeholder="task title">
+                    <textarea class="new-task__description" rows="8" placeholder="task description"></textarea>
+                    <div class="form-footer">
+                        <input type="button" class="button button-primary save-button" value="save">
+                        <div class="deadline-radios">
+                            <span>deadline:</span>
+                            <ul class="radio-wrapper">
+                                <li>
+                                    <label><input type="radio" class="new-task__deadline" name="set-deadline" value="none" checked>none</label>
+                                </li>
+                                <li>
+                                    <label><input type="radio" class="new-task__deadline" name="set-deadline" value="day">day</label>
+                                </li>
+                                <li>
+                                    <label><input type="radio" class="new-task__deadline" name="set-deadline" value="week">week</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </div>
+</body>
+</html>
