@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>To-Do List</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body onload="init()">  
+  <div class="header">Your limitation—it’s only your imagination.</div>
+  <div class="mainSection">
+    <div class="addTask">
+          <div class="addTask__mainInfo">
+                  <span>Wanna add a new task?</span>
+                  <div class="taskName"><input type="text" size="40px" placeholder="Write your task here..." id="taskName"></div>
+                  <input type="date" name="calendar" id="deadline" onchange="checkDate()" class="dateInput">
+                  </div>
+                  <P>Choose your tag:</P>
+        <div class="addTask__tag">   
+            <div class="tagChoise"><input type="radio" class="radio" id="greenTea" name="radioTag" value="greenTea" checked/><label for="greenTea">Green Tea</label><div class="greenTea tag"></div></div>
+            <div class="tagChoise"><input type="radio" class="radio" id="mandarin" name="radioTag" value="mandarin"/><label for="mandarin">Mandarin</label><div class="mandarin tag"></div></div> 
+            <div class="tagChoise"><input type="radio" class="radio" id="banana" name="radioTag" value="banana"/><label for="banana">Banana</label><div class="banana tag"></div></div>
+            <div class="tagChoise"><input type="radio" class="radio" id="rose" name="radioTag" value="rose"/><label for="rose">Rose</label><div class="rose tag"></div></div>
+            <div class="tagChoise"><input type="radio" class="radio" id="lavender" name="radioTag" value="lavender"/><label for="lavender">Lavender</label><div class="lavender tag"></div></div>
+            <div class="tagChoise"><input type="radio" class="radio" id="blueberry" name="radioTag" value="blueberry"/><label for="blueberry">Blueberry</label><div class="blueberry tag"></div></div>
+        </div>
+        <button onclick="addTask(this)">Add task</button>
+      </div>  
+    <div class="tasks" ><span>Your tasks:</span> 
+        <button onclick="dateSort()">Sort by date</button>
+        <button onclick="doneSort()">Not done first</button>
+        <hr>
+        <div id="taskList"></div>
+      <button onclick="deleteAll()">Delete all tasks</button>
+      </div>
+  </div>
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
