@@ -1,0 +1,139 @@
+body {
+  background: url("../img/shia3.jpg") no-repeat center top/cover fixed;
+  color: black;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+container {
+  color: black;
+  display: block;
+  width: 600px;
+  margin: 100px auto;
+}
+
+.link {
+  margin: 0 auto;
+  text-align: center;
+}
+
+a {
+  color: #00b61e;
+}
+
+h1 {
+  font-size: 60px;
+  text-align: center;
+  color: black;
+}
+
+h2 {
+  font-size: 18px;
+  text-align: center;
+  color: #000;
+}
+
+.first__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.second__section {
+  margin-top: 50px;
+  text-align: center;
+  align-items: center;
+}
+
+.first-line-arrow {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.second-line-arrow {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+p {
+  padding: 10px;
+}
+
+li * {
+  float: left;
+}
+
+button {
+  border: 0px;
+  color: #000;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #048319;
+}
+
+input {
+  font-size: 15px;
+  height: 25px;
+  padding: 10px;
+  color: #000;
+}
+
+#deadline {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 0px;
+  height: auto;
+  width: 160px;
+}
+
+#newTask {
+  margin: 0px 10px 10px 0px;
+}
+
+#add {
+  margin-top: 5px;
+  align-items: center;
+  display: block;
+  background: rgb(255, 255, 255);
+  font-size: 18px;
+  color: #000;
+  width: 160px;
+}
+
+#add:hover {
+  color: #048319;
+}
+
+.btn {
+  background: rgb(238, 235, 235);
+  font-size: 20px;
+  color: #000;
+}
+
+li {
+  overflow: hidden;
+}
+
+li tag {
+  font-size: 17px;
+  width: 340px;
+}
+
+.data {
+  height: 20px;
+  width: 90px;
+}
+
+#completedTasks tag {
+  text-decoration: line-through;
+  color: #048319;
+}
+
+ul li input[type='text'],
+input[type='data'] {
+  display: none;
+}
