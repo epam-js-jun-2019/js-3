@@ -14,12 +14,12 @@
 // * CHANGESTAT: change and save task status (completed / not completed)
 
 
-var list = (function (){
+var list = (function() {
 
   var taskList;
   var localTaskList = JSON.parse(localStorage.getItem('myArr'));
   
-  if (localTaskList.length == 0) {
+  if (!localTaskList || localTaskList.length === 0) {
     taskList = [{id: 123, check: false, text: "drink cofee", deadline: "2019-07-30"}, 
                 {id: 321, check: true, text: "call mom", deadline: "2019-07-29"}];
   } else {
@@ -27,7 +27,7 @@ var list = (function (){
   }
 
   return {
-    create: function (text,deadline) {
+    create: function(text, deadline) {
       var newTask = {};
 
       newTask.id = Date.now();
@@ -38,25 +38,24 @@ var list = (function (){
       return newTask;
     },
 
-    push: function (newTask) {
+    push: function(newTask) {
       taskList.push(newTask);
       toLocalStorage(taskList);
     },
 
     delete: function (id) {
-      var ind;
 
-      taskList.forEach(function (curr, i) {
-        if (curr.id == id) {
-          ind = i;
-        }
-      });
+      taskList = taskList.filter(task => task.id !== +id);
 
-      taskList.splice(ind, 1);
       toLocalStorage(taskList);
     },
 
-    show: function (list = taskList) {
+    show: function(list) {
+
+      if (!list) {
+        list = taskList;
+      };
+
       var parentElem = document.getElementById('tasks');
 
       // clear task-list
@@ -65,7 +64,7 @@ var list = (function (){
       }
   
       // show updated task-list
-      return list.forEach(function(elem){
+      return list.forEach(function(elem) {
 
         var div = document.createElement('div');
         var checkInput = document.createElement('input');
@@ -85,11 +84,7 @@ var list = (function (){
         delButton.type = 'button';
         delButton.id = elem.id + "-2";
 
-        if (elem.check === false) {
-          checkInput.checked = false;
-        } else {
-          checkInput.checked = true;
-        };
+        checkInput.checked = elem.check;
 
         textLabel.innerHTML = elem.text;
         dateSpan.innerHTML = elem.deadline;
@@ -102,24 +97,24 @@ var list = (function (){
         div.appendChild(delSpan);
         delSpan.appendChild(delButton);
 
-        delButtonOnclick();
+        delButtonOnСlick();
         checkboxOnclick();
       })
     },
 
-    filterCheck: function (check) {
+    filterCheck: function(check) {
       var filteredTaskList = [];
 
-      if (check==="all") {
+      if (check === "all") {
         return list.show();
-      } else if (check==='do') {
-        taskList.forEach(function (curr) {
-          if (curr.check === false) {
+      } else if (check === 'do') {
+        taskList.forEach(function(curr) {
+          if (!curr.check) {
             filteredTaskList.push(curr);
           }
         });
       } else {
-        taskList.forEach(function (curr) {
+        taskList.forEach(function(curr) {
           if (curr.check) {
             filteredTaskList.push(curr);
           }
@@ -128,47 +123,46 @@ var list = (function (){
       return list.show(filteredTaskList);
     },
 
-    filterDeadline: function (deadline) {
+    filterDeadline: function(deadline) {
       var filteredTaskList = [];
 
-      switch(deadline) {
+      switch (deadline) {
         case 'failed':
-          taskList.forEach(function (curr) {
-            if (compareDates(curr.deadline)[0]==="failed" || 
-                compareDates(curr.deadline)[1]==="failed") {
+          taskList.forEach(function(curr) {
+            if (compareDates(curr.deadline)[0] === "failed" || 
+                compareDates(curr.deadline)[1] === "failed") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'today':
-            taskList.forEach(function (curr) {
-              console.log(compareDates(curr.deadline));
-            if (compareDates(curr.deadline)[0]==="today" ||
-                compareDates(curr.deadline)[1]=== "today") {
+            taskList.forEach(function(curr) {
+            if (compareDates(curr.deadline)[0] === "today" ||
+                compareDates(curr.deadline)[1] === "today") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'tomorrow':
-            taskList.forEach(function (curr) {
-            if (compareDates(curr.deadline)[0]==="tomorrow" || 
-                compareDates(curr.deadline)[1]==="tomorrow") {
+            taskList.forEach(function(curr) {
+            if (compareDates(curr.deadline)[0] === "tomorrow" || 
+                compareDates(curr.deadline)[1] === "tomorrow") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'week':
-            taskList.forEach(function (curr) {
-            if (compareDates(curr.deadline)[0]==="week" || 
-                compareDates(curr.deadline)[1]==="week") {
+            taskList.forEach(function(curr) {
+            if (compareDates(curr.deadline)[0] === "week" || 
+                compareDates(curr.deadline)[1] === "week") {
               filteredTaskList.push(curr);
             }
           });
           break;
         case 'month':
-            taskList.forEach(function (curr) {
-            if (compareDates(curr.deadline)[0]==="month" || 
-                compareDates(curr.deadline)[1]==="month") {
+            taskList.forEach(function(curr) {
+            if (compareDates(curr.deadline)[0] === "month" || 
+                compareDates(curr.deadline)[1] === "month") {
               filteredTaskList.push(curr);
             }
           });
@@ -181,7 +175,7 @@ var list = (function (){
     },
 
     changestat: function(id) {
-      taskList.forEach(function (curr) {
+      taskList.forEach(function(curr) {
         if (curr.id === id) {
           curr.check = !curr.check;
         }
@@ -214,11 +208,11 @@ function compareDates (deadline) {
   var dl = Date.parse(deadline);
   var deadlineDate = new Date(dl);
   var deadlineYear = deadlineDate.getFullYear(); 
-  var deadlineMonth = deadlineDate.getMonth();;
+  var deadlineMonth = deadlineDate.getMonth();
   var deadlineDay = deadlineDate.getDate();
 
   var tomorrow = new Date();
-  tomorrow.setDate(today.getDate()+1);
+  tomorrow.setDate(today.getDate() + 1);
   var tomorrowYear = tomorrow.getFullYear();
   var tomorrowMonth = tomorrow.getMonth();
   var tomorrowDay = tomorrow.getDate();
@@ -269,7 +263,7 @@ function compareDates (deadline) {
 // ***************  ONCLICK FUNCTIONS  ***************
 
 
-function addButtonOnclick () {
+function addButtonOnclick() {
 
   var addTask = document.getElementById('add-task');
   var addDate = document.getElementById('add-date');
@@ -283,16 +277,16 @@ function addButtonOnclick () {
       list.push(newTask);
       list.show();
     }
-  };;
+  };
 
 }
 
-function delButtonOnclick () {
+function delButtonOnСlick() {
 
   var delButton = document.getElementsByClassName('tasks__element_delbutton');
 
-  for (var i=0; i<delButton.length; i++) {
-    delButton[i].onclick = function (e) {
+  for (var i = 0; i < delButton.length; i++) {
+    delButton[i].onclick = function(e) {
       var but = this.getAttribute('id');
       var butArr = but.split("-");
 
@@ -308,8 +302,8 @@ function checkboxOnclick () {
 
   var checkBox = document.getElementsByClassName('tasks__element_checkbox');
 
-  for (var i=0; i<checkBox.length; i++) {
-    checkBox[i].onclick = function (e) {
+  for (var i = 0; i < checkBox.length; i++) {
+    checkBox[i].onclick = function(e) {
       var check = this.getAttribute('id');
       var checkArr = check.split("-");
 
@@ -325,7 +319,7 @@ function filterCheckedOnchange () {
 
   var filterChecked = document.getElementById('filter_checked');
 
-  filterChecked.onchange = function (e) {
+  filterChecked.onchange = function(e) {
     e.preventDefault();
 
     list.filterCheck(filterChecked.value);
@@ -333,11 +327,11 @@ function filterCheckedOnchange () {
 
 }
 
-function filterDeadlineOnchange () {
+function filterDeadlineOnchange() {
 
   var filterDeadline = document.getElementById('filter_deadline');
 
-  filterDeadline.onchange = function (e) {
+  filterDeadline.onchange = function(e) {
     e.preventDefault();
 
     list.filterDeadline(filterDeadline.value);
@@ -350,12 +344,12 @@ function filterDeadlineOnchange () {
 //***************** CALLING UP FUNCTIONS ON LOADING PAGE *****************
 
 
-window.onload = function () {
+window.onload = function() {
 
   list.show();
 
   addButtonOnclick();
-  delButtonOnclick();
+  delButtonOnСlick();
   checkboxOnclick();
   filterCheckedOnchange();
   filterDeadlineOnchange();
