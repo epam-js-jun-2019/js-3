@@ -1,0 +1,193 @@
+@import "variables";
+@import "mixins";
+
+html {
+  @include fullContainer;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  
+  @include fullContainer;
+  text-align: center;
+
+  background-color: $darkColor;
+  color: $lightColor;
+}
+
+p {
+  margin: 0;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+
+  @include fullContainer;
+  @include gridTemplate;
+}
+
+.header {
+  grid-area: h;
+
+  vertical-align: middle;
+}
+
+.footer {
+  grid-area: f;
+  position: relative;
+
+  text-align: left;
+
+  font-size: 0.8em;
+
+  p {
+    margin: 0;
+    @include verticalAlignCenter(10%);
+  }
+}
+
+.todo-title {
+  grid-area: tt;
+  position: relative;
+
+  margin: 0;
+
+  font-size: 30pt;
+  
+  h1 {
+    margin: 0;
+    @include verticalAlignCenter();
+  }
+}
+
+.todo-area {
+  grid-area: app;
+
+  @include appGridTemplate;
+
+  background-color: $lightColor;
+  color: $darkColor;
+
+  @include borderGray(solid, 20px, $lightColor);
+  border-radius: 15px;
+}
+
+.add-task {
+  grid-area: input;
+  position: relative;
+
+  @include borderGray(solid, 2px);
+
+  &__input {
+    height: 30px;
+    border-radius: 5px;
+
+    &_task {
+      width: 45%;
+      padding: 0;
+
+      @include borderGray();
+      @include verticalAlignCenter(30%);
+    }
+
+    &_date {
+      width: 20%;
+      padding: 0;
+
+      @include borderGray();
+      @include verticalAlignCenter(65%);
+    }
+  }
+
+  &__button {
+    height: 30px;
+    width: 15%;
+  
+    margin-left: 10px;
+  
+    border-radius: 5px;
+    
+    background-color: $lightColor;
+    color: $darkColor;
+    
+    font-weight: 800;
+
+    @include verticalAlignCenter(85%);
+  }
+}
+
+.filter {
+  grid-area: filt;
+  position: relative;
+
+  @include filterGridTemplate;
+
+  &_checked {
+    grid-area: filt1;
+    margin: auto;
+  }
+
+  &_deadline {
+    grid-area: filt2;
+    margin: auto;
+  }
+
+  select {
+    margin-left: 15px;
+  }
+}
+
+#tasks {
+  grid-area: tsks;
+
+  background-color: white;
+  text-align: left;
+
+  position: relative;
+  overflow: auto;
+
+}
+
+.tasks__element {
+  @include taskGridTemplate;
+
+  width: 100%;
+  height: 40px;
+
+  border-bottom: 1px dashed lightgray;
+
+  &_checkbox {
+    grid-area: check;
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 5px;
+
+    margin: auto;
+  }
+
+  &_description {
+    grid-area: txt;
+    position: relative;
+    
+    margin: auto;
+  }
+
+  &_date {
+    grid-area: dt;
+    position: relative;
+
+    margin: auto;
+  }
+
+  &_delete {
+    grid-area: del;
+    position: relative;
+
+    margin: auto;
+  }
+}
+

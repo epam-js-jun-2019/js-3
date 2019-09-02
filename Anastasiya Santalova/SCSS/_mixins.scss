@@ -1,0 +1,61 @@
+@mixin gridTemplate {
+  display: grid;
+  
+  grid-template-areas:
+  "h h h"
+  ". tt ."
+  ". app ."
+  ". . ."
+  "f f f";
+  
+  grid-template-columns: 1fr 700px 1fr;
+  grid-template-rows: 50px 2fr 400px 1fr 40px;
+}
+
+@mixin fullContainer {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin appGridTemplate {
+  display: grid;
+  
+  grid-template-areas:
+  "input"
+  "filt"
+  "tsks";
+  
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 40px 1fr;
+}
+
+@mixin filterGridTemplate {
+  display: grid;
+    
+  grid-template-areas:
+  "filt1 filt2";
+    
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+@mixin taskGridTemplate {
+  display: grid;
+    
+  grid-template-areas:
+  "check txt dt del";
+    
+  grid-template-columns: 30px 1fr 100px 40px;
+  grid-template-rows: 1fr;
+}
+
+@mixin borderGray ($bStyle: solid, $bWidth: 1px, $bColor: lightgrey) {
+  border: $bWidth $bStyle $bColor;
+}
+
+@mixin verticalAlignCenter ($left: 50%) {
+  position: absolute;               
+  top: 50%;
+  left: $left;                   
+  transform: translate(-50%, -50%)
+}

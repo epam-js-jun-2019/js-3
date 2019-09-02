@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
+
+    <title>ToDo List / Santalova</title>
+
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+
+  <main id="root">
+
+    <header class="header">
+           
+    </header>
+
+    <section class="todo-title">
+      <h1>ToDo List</h1>
+    </section>
+
+    <section class="todo-area">
+
+      <form class="add-task">
+          <input class="add-task__input add-task__input_task" id="add-task" value="learn React..." required></input>
+          <input type="date" class="add-task__input add-task__input_date" id="add-date" required></input>
+          <button class="add-task__button" id="add-button" name="Add">Add</button>
+      </form>
+
+      <div class="filter" id="filter">
+
+        <span class="filter_checked">
+          <span>
+            Do/done
+          </span>
+          <select id="filter_checked">
+            <option value='all'>All</option>
+            <option value='do'>Do</option>
+            <option value='done'>Done</option>
+          </select>
+        </span>
+        
+        <span class="filter_deadline">
+          <span>
+            Deadline
+          </span>
+          <select id="filter_deadline">
+            <option value="all">All</option>
+            <option value="failed">Failed</option>
+            <option value="today">Today</option>
+            <option value="tomorrow">Tomorrow</option>
+            <option value="month">This month</option>
+          </select>
+        </span>
+
+      </div>
+
+      <div id="tasks">
+
+        <!-- tasks will be here -->
+
+      </div>
+
+    </section>
+
+    <footer class="footer">
+        <p>&copy; Anastasiya Santalova, 2019</p>
+    </footer>
+
+  </main>
+
+  <script type="text/javascript" src="app.js"> </script>
+
+  </body>
+</html>
