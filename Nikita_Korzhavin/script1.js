@@ -2,6 +2,11 @@
 
 var moduleStorage = function() {
   var storage = JSON.parse(localStorage.getItem('todos'));
+
+  var updateLocalStorage = function(storage) {
+    localStorage.setItem('todos', JSON.stringify(storage));
+  };
+  
   if (!storage) {
     storage = {};
     updateLocalStorage(storage);
@@ -21,10 +26,7 @@ var moduleStorage = function() {
     updateLocalStorage(storage);
   };
 
-  var updateLocalStorage = function(storage) {
-    localStorage.setItem('todos', JSON.stringify(storage));
-  };
-
+  
   var setItemInStorage = function(itemName) {
     storage[itemName].progress = !storage[itemName].progress;
     updateLocalStorage(storage);
