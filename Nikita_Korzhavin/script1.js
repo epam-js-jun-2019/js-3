@@ -191,8 +191,8 @@ var module = function() {
   /*---------------- filter construction ---------------------- */
 
   var createFilters = function() {
-    var ParentDiv = document.createElement('form');
-    ParentDiv.id = 'filter-table';
+    var parentDiv = document.createElement('form');
+    parentDiv.id = 'filter-table';
     var filterProgressLabel = document.createElement('label');
     filterProgressLabel.innerHTML = 'filter by progress: ';
 
@@ -202,7 +202,7 @@ var module = function() {
     filterProgress.appendChild(new Option('done', 'done'));
     filterProgress.appendChild(new Option('not done', 'not done'));
     filterProgressLabel.appendChild(filterProgress);
-    ParentDiv.appendChild(filterProgressLabel);
+    parentDiv.appendChild(filterProgressLabel);
 
     var filterDeadLineLabel = document.createElement('label');
     filterDeadLineLabel.innerHTML = 'filter by date: ';
@@ -213,13 +213,13 @@ var module = function() {
     filterDeadLine.appendChild(new Option('week', 'week'));
 
     filterDeadLineLabel.appendChild(filterDeadLine);
-    ParentDiv.appendChild(filterDeadLineLabel);
+    parentDiv.appendChild(filterDeadLineLabel);
 
     var submitButton = document.createElement('button');
     submitButton.id = 'filter-button';
     submitButton.innerHTML = 'filter';
-    ParentDiv.appendChild(submitButton);
-    return ParentDiv;
+    parentDiv.appendChild(submitButton);
+    return parentDiv;
   };
 
   //---------------------add todo form
